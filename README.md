@@ -10,10 +10,11 @@ When linking to routes, use the `url_for()` syntax whenever possible. Rememember
 Example: `href="{{ url_for('main.home') }}"`
 
 #### All Routes:
-main\
-	home\
-	about\
-users\
-	register\
-	login\
-clubs\
+-main
+	-home
+	-about
+-users
+	-login
+	-register
+	-logout
+-clubs
