@@ -1,3 +1,4 @@
+'''
 from __future__ import print_function
 from flask import redirect, Flask, render_template, url_for, flash
 from flask_assets import Bundle, Environment
@@ -48,3 +49,5 @@ def login():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
+'''
