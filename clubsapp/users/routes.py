@@ -38,7 +38,7 @@ def login():
 			login_user(user, remember=form.remember.data)
 			# remembers if login was prompted from a different page
 			next_page = request.args.get('next')
-    		return redirect(next_page) if next_page else redirect(url_for('main.home'))
+    			return redirect(next_page) if next_page else redirect(url_for('main.home'))
 		else:
 			flash('Login unsucessful. Please check your email and password!', 'danger')
 	return render_template('login.html', title='Login', form=form)
