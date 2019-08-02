@@ -4,7 +4,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from clubsapp import db
 from clubsapp.models import User
 from clubsapp.users.forms import RegistrationForm, LoginForm
-from flaskblog.users.utils import hash_pw
+from clubsapp.users.utils import hash_pw
 
 
 users = Blueprint('users', __name__)
