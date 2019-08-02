@@ -21,7 +21,7 @@ def register():
 		user = User(firstname=form.firstname.data, lastname=form.lastname.data, email=form.email.data, password=hashed_password)
 		db.session.add(user)
 		db.session.commit()
-		flash('Your account has been created, you are now able to log in!', 'success')
+		flash(f'Account has been created {form.firstname.data} {form.lastname.data}, you are now able to log in!', 'success')
 		return redirect(url_for('users.login'))
 	return render_template('register.html', title='Register', form=form)
 
@@ -40,7 +40,7 @@ def login():
 			next_page = request.args.get('next')
 			return redirect(next_page) if next_page else redirect(url_for('main.home'))
 		else:
-			flash('Login unsucessful. Please check your email and password!', 'danger')
+			flash('Login unsuccessful. Please check your email and password!', 'danger')
 	return render_template('login.html', title='Login', form=form)
 
 

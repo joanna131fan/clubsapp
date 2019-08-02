@@ -16,10 +16,10 @@ class RegistrationForm(FlaskForm):
         validators=[DataRequired(), Email()],
         render_kw={"placeholder":"Enter Email"})
     password = PasswordField('Password', 
-        validators=[DataRequired()],
+        validators=[DataRequired(), EqualTo('confirm_password', message='Passwords Must Match')],
         render_kw={"placeholder":"Create Password"})
     confirm_password = PasswordField('Confirm Password', 
-        validators=[DataRequired(), EqualTo('password')],
+        validators=[DataRequired(), EqualTo('password', message='Passwords Must Match')],
         render_kw={"placeholder":"Confirm Password"})
     submit = SubmitField('Sign Up')
     
