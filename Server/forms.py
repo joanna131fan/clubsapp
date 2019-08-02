@@ -20,14 +20,22 @@ class RegistrationForm(FlaskForm):
         validators=[DataRequired(), EqualTo('password')],
         render_kw={"placeholder":"Confirm Password"})
     submit = SubmitField('Sign Up')
+    
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()     
+        if user:
+            raise ValidationError('That email is taken, please choose another one')
 
+    
 class LoginForm(FlaskForm):
     email = StringField('Email', 
         validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', 
+        validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Log In')
 
+# NOTE: what folder should this go in?
 class SubmitMinutes(FlaskForm):
     club = StringField('Club Name',
         validators=[DataRequired()],
