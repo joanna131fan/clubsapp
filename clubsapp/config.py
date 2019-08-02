@@ -2,7 +2,7 @@
 try:
   import environvars
   target = environvars.environ
- except ModuelNotFoundError as e:
+except ModuelNotFoundError as e:
   import os
   target = os.environ
 
