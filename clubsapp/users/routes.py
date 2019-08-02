@@ -10,7 +10,7 @@ from flaskblog.users.utils import hash_pw
 users = Blueprint('users', __name__)
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@users.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
@@ -28,7 +28,7 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@users.route('/login', methods=['GET', 'POST'])
 def login():
 	if current_user.is_authenticated:
         return redirect(url_for('main.home'))
