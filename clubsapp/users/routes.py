@@ -14,11 +14,11 @@ users = Blueprint('users', __name__)
 def register():
 	if current_user.is_authenticated:
 		return redirect(url_for('main.home'))
-    
+
 	form = RegistrationForm()
 	if form.validate_on_submit():
-    		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-    		user = User(firstname=form.firstname.data, lastname=form.lastname.data, password=hashed_password)
+		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+		user = User(firstname=form.firstname.data, lastname=form.lastname.data, password=hashed_password)
 		db.session.add(user)
 		db.session.commit()
 		flash('Your account has been created, you are now able to log in!', 'success')
@@ -38,7 +38,7 @@ def login():
 			login_user(user, remember=form.remember.data)
 			# remembers if login was prompted from a different page
 			next_page = request.args.get('next')
-    			return redirect(next_page) if next_page else redirect(url_for('main.home'))
+			return redirect(next_page) if next_page else redirect(url_for('main.home'))
 		else:
 			flash('Login unsucessful. Please check your email and password!', 'danger')
 	return render_template('login.html', title='Login', form=form)
