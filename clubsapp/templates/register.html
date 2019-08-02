@@ -1,5 +1,5 @@
-{%extends "layout.html"%}
-{%block content%}
+{% extends "layout.html" %}
+{% block content %}
 <h1>Register Page</h1>
 
     <div class = "content-section">
@@ -35,7 +35,7 @@
     </div>
     <div class="border-top pt-3">
         <small class="text-muted">
-            Already Have An Account? <a class="ml-2" href="{{ url_for('login')}}"></a>
+            Already Have An Account? <a class="ml-2" href="{{ url_for('users.login') }}"></a>
         </small>
     </div>
-{%endblock%}
+{% endblock %}
