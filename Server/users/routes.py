@@ -12,9 +12,12 @@ users = Blueprint('users', __name__)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+    
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash(f'Account created for {form.username.data}', 'success')
+        flash(f'Account created for {form.firstname.data}' {form.lastname.data}, 'success')
         return redirect(url_for('main.home'))
     return render_template('register.html', title='Register', form=form)
 
