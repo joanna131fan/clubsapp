@@ -25,9 +25,15 @@ def create_app(config_class=Config):
   
   db.init_app(app)
   login_manager.init_app(app)
+  mail.init_app(app)
   
   # Import Blueprints
-  
-  
+  from clubsapp.main.routes import main
+  from clubsapp.users.routes import users
+  from clubsapp.clubs.routes import clubs
+  app.register_blueprint(main)
+  app.register_blueprint(users)
+  app.register_blueprint(clubs)
+
   return app
   
