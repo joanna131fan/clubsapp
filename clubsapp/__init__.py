@@ -17,9 +17,6 @@ mail = Mail()
 # Make sure this is a good way to deal with this
 js = Bundle('main.js', 'bootstrap.js',output='gen/all.js')
 
-assets = Environment(app)
-assets.register('all.js', js)
-
 
 def create_app(config_class=Config):
 	app = Flask(__name__)
@@ -29,7 +26,9 @@ def create_app(config_class=Config):
 	bcrypt.init_app(app)
 	login_manager.init_app(app)
 	mail.init_app(app)
-  
+	
+	assets = Environment(app)
+	assets.register('all.js', js)
 	# Import Blueprints
 	from clubsapp.main.routes import main
 	from clubsapp.users.routes import users
