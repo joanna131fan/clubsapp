@@ -1,3 +1,5 @@
+'''
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, DateField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
@@ -59,3 +61,4 @@ class SubmitMinutes(FlaskForm):
         validators=[DataRequired(), Length(min=0, max=300)],
         render_kw={"placeholder":"Max 300 Characters"})
 
+'''
