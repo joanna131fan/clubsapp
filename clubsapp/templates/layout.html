@@ -34,16 +34,16 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarToggle">             
           <div class="navbar-nav">
-              <a class="nav-item nav-link" href="/">Home</a>
-              <a class="nav-item nav-link" href="/about">About</a>
+              <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
+              <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
               <a class="nav-item nav-link" href="/viewminutes">View Minutes</a>
               <a class="nav-item nav-link" href="/recordminutes"> Record Minutes</a>
           </div>
           <!-- Navbar Right Side: CHANGE TO FORCE LOGIN LATER -->
             <div class="navbar-nav">
               <a class="nav-item nav-link" href="/myclubs">My Clubs</a>
-              <a class="nav-item nav-link" href="/login">Login</a>
-              <a class="nav-item nav-link" href="/register">Register</a>
+              <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
+              <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a>
             </div>
           </div>
     </div>
