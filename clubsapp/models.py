@@ -15,7 +15,9 @@ user_club_assoc_table = db.Table('user_club_assoc_table',
 
 class User(db.Model, UserMixin):
   id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String(30), nullable=False)
+  firstname = db.Column(db.String(15), nullable=False)
+  lastname = db.Column(db.String(15), nullable=False)
+  email = db.Column(db.String(60), unique=True, nullable=False)
   password = db.Column(db.String(60), nullable=False)
   clubs = db.relationship('Club', secondary=user_club_assoc_table)
 
