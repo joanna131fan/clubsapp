@@ -1,7 +1,7 @@
 
 from flask import Blueprint, render_template, redirect, request, url_for, flash
 from flask_login import login_user, current_user, logout_user, login_required
-from clubsapp import db
+from clubsapp import db, bcrypt
 from clubsapp.models import User
 from clubsapp.users.forms import RegistrationForm, LoginForm
 from clubsapp.users.utils import hash_pw
