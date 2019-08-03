@@ -14,7 +14,7 @@ clubs = Blueprint('clubs', __name__)
 def user_clubs(user_id):
 	user = User.query.get_or_404(user_id)
 	clubs = user.clubs
-	form = RegisterClubForm()
+	form = ClubRegistrationForm()
 	if form.validate_on_submit():
 		advisor = User.query.filter_by(email=form.email.data)
 		if not advisor:
