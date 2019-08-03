@@ -23,7 +23,7 @@ class Club(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(100), unique=True, nullable=False)
 	advisor_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-	advisor = db.relatioship('User', back_populates='clubs')
+	advisor = db.relationship('User', back_populates='clubs')
 	members = db.relationship('User', secondary=user_club_assoc_table)
 	
 	
