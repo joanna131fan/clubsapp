@@ -40,7 +40,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Log In')
 
 # NOTE: what folder should this go in?
-class SubmitMinutes(FlaskForm):
+class MyClubsInfo(FlaskForm):
     club = StringField('Club Name',
         validators=[DataRequired()],
         render_kw={"placeholder":"Enter Club Name"})
@@ -50,15 +50,5 @@ class SubmitMinutes(FlaskForm):
     advisor_email = StringField('Advisor Email', 
         validators=[DataRequired(), Email()],
         render_kw={"placeholder":"Enter Advisor Email"})
-    month = StringField('Month',
-        validators=[DataRequired()],
-        render_kw={"placeholder":"Month"})
-    day = IntegerField('Day',
-        validators=[DataRequired()],
-        render_kw={"placeholder":"Day"})
-    year = IntegerField('Year',
-        validators=[DataRequired()],
-        render_kw={"placeholder":"Year"})
-    notes = StringField('Meeting Notes',
-        validators=[DataRequired(), Length(min=0, max=300)],
-        render_kw={"placeholder":"Max 300 Characters"})
+    submit = SubmitField('Add Club')
+    
