@@ -19,30 +19,28 @@
 <header style="float:inherit">
   <nav class="navbar navbar-expand navbar-toggler navbar-dark bg-steel navbar-fixed-top" role="navigation">
     <div class="container">
-      <div class="row">
       <a class="navbar-brand mr-4" href="/" style="display: inline-block">ClubsApp</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarToggle">             
-          <div class="navbar-nav">
-              <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
-              <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
-              <a class="nav-item nav-link" href="/viewminutes">View Minutes</a>
-              <a class="nav-item nav-link" href="/recordminutes"> Record Minutes</a>
-          </div>
-          <!-- Navbar Right Side: CHANGE TO FORCE LOGIN LATER -->
-            <div class="navbar-nav">
-              {% if current_user.is_authenticated %}
-                <a class="nav-item nav-link" href="{{ url_for('clubs.user_clubs', user_id=current_user.id) }}">My Clubs</a>
-                <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Log Out</a>
-              {% else %}
-                <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
-                <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a>
-              {% endif %}
-            </div>
-          </div>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarToggle">             
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a
+          <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
+          <a class="nav-item nav-link" href="/viewminutes">View Minutes</a>
+          <a class="nav-item nav-link" href="/recordminutes"> Record Minutes</a>
         </div>
+        <!-- Navbar Right Side: CHANGE TO FORCE LOGIN LATER -->
+        <div class="navbar-nav">
+          {% if current_user.is_authenticated %}
+            <a class="nav-item nav-link" href="{{ url_for('clubs.user_clubs', user_id=current_user.id) }}">My Clubs</a>
+            <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Log Out</a>
+          {% else %}
+            <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
+            <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a
+          {% endif %}
+        </div>
+      </div>
     </div>
   </nav>  
 </header>     
