@@ -12,7 +12,7 @@ clubs = Blueprint('clubs', __name__)
 @clubs.route('/user_clubs/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def user_clubs(user_id):
-	user = User.get_or_404(user_id)
+	user = User.query.get_or_404(user_id)
 	clubs = user.clubs
 	form = RegisterClubForm()
 	if form.validate_on_submit():
