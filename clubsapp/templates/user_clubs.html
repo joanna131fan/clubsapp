@@ -2,6 +2,12 @@
 {% block content %}
   <h1>My Clubs</h1>
   <div class="content-section">
+    {% for club in clubs %}
+      <p>Club Name: {{ club.name }}</p>
+      <p>Members: {{ club.members }}</p>
+      <p>Advisor: {{ club.advisor }}</p>
+    {% endfor %}
+    <!-- 
     <form method="POST" action="">
       {{ form.hidden_tag() }}
       <fieldset class="form-group">
@@ -23,5 +29,6 @@
         {{ form.submit(class="btn btn-outline-info")}}
       </div>
     </form>
+    -->
   </div>
 {% endblock content %}
