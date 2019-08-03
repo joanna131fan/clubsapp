@@ -18,3 +18,6 @@ Example: `href="{{ url_for('main.home') }}"`
 	- register
 	- logout
 - clubs
+	- user_clubs (myclubs)
+	- recordminutes
+	- viewminutes
