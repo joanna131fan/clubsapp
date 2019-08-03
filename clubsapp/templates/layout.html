@@ -33,7 +33,7 @@
           </div>
           <!-- Navbar Right Side: CHANGE TO FORCE LOGIN LATER -->
             <div class="navbar-nav">
-              <a class="nav-item nav-link" href="/myclubs">My Clubs</a>
+              <a class="nav-item nav-link" href="{{ url_for('clubs.user_clubs', user_id=current_user.id) }}">My Clubs</a>
               <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
               <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a>
             </div>
