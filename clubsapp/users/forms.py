@@ -38,17 +38,3 @@ class LoginForm(FlaskForm):
         render_kw={"placeholder":"Enter Password"})
     remember = BooleanField('Remember Me')
     submit = SubmitField('Log In')
-
-# NOTE: what folder should this go in?
-class MyClubsInfo(FlaskForm):
-    club = StringField('Club Name',
-        validators=[DataRequired()],
-        render_kw={"placeholder":"Enter Club Name"})
-    advisor = StringField('Advisor',
-        validators=[DataRequired()],
-        render_kw={"placeholder":"Enter Advisor Name"})
-    advisor_email = StringField('Advisor Email', 
-        validators=[DataRequired(), Email()],
-        render_kw={"placeholder":"Enter Advisor Email"})
-    submit = SubmitField('Add Club')
-    
