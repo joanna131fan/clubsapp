@@ -43,19 +43,26 @@
       </div>
     </div>
   </nav>  
-</header>     
-    <main role="main" class="container" style="margin-top: 100px">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                  {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">
-                      {{  message }}
-                    </div>
-                  {% endfor %}
-                {% endif %}
-            {% endwith %}
-          {% block content %} {% endblock %}
-    </main>
+</header>
+<!-- container is the bootstrap highest level group of content -->
+<main role="main" class="container" style="margin-top: 100px">
+  <!-- a row groups things together in a row. -->
+  <div class="row">
+    <!-- a bootstrap row has 12 columns. This is saying everything within this col will take up 8 cols -->
+    <div class="col-md-8">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+              {{  message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      {% block content %} {% endblock %}
+    </div>
+  </div>
+</main>
 
 
     <!-- Optional JavaScript -->
