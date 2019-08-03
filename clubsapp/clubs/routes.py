@@ -16,11 +16,15 @@ def user_clubs(user_id):
 	clubs = user.clubs
 	form = RegisterClubForm()
 	if form.validate_on_submit():
-		club = Club(name=form.name.data, bio='Default')
+		advisor = User.query.filter_by(email=form.email.data)
+		if not advisor:
+			flash('That advisor email does not exist!', 'danger')
+			return
+		club = Club(name=form.name.data, bio='Default', advisor=advisor)
 		db.session.add(club)
-		club.advisor = user
 		db.session.commit()
 		flash('Your club has been created!', 'success')
+		return redirect('user_clubs.html', clubs=clubs, user=user, form=form)
 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 
 
