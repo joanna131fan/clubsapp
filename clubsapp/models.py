@@ -4,6 +4,7 @@ from flask import current_app
 from flask_login import UserMixin
 from clubsapp import db, login_manager
 
+
 user_club_assoc_table = db.Table('user_club_assoc_table',
 	db.Column('user_id', db.Integer, db.ForeignKey('user.id')),																						db.Column('club_id', db.Integer, db.ForeignKey('club.id')))
 
