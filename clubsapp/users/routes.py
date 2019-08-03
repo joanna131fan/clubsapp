@@ -49,4 +49,9 @@ def login():
 	return render_template('login.html', title='Login', form=form)
 
 
+@users.route('/logout')
+def logout():
+	logout_user()
+	return redirect(url_for('users.login'))
+
 
