@@ -5,7 +5,7 @@ from wtforms.validators import Length, Email, ValidationError
 
 
 class ClubRegistrationForm(FlaskForm):
-    club_name = StringField('Club Name',
+    name = StringField('Club Name',
         validators=[DataRequired()],
         render_kw={"placeholder":"Enter Club Name"})
     advisor = StringField('Advisor',
