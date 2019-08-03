@@ -7,6 +7,16 @@ from flask_mail import Message
 from clubsapp import mail
 
 
+class MobilePw:
+	@staticmethod
+	def generate_password_hash(password):
+		return password.encode()
+		
+	@staticmethod
+	def check_password_hash(user_pw, form_pw):
+		return user_pw == form_pw
+
+
 def hash_pw(password, salt=None):
 	'''Hashes pwd. Output is of form `salt, hash`.'''
 	if not salt:

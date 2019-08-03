@@ -1,13 +1,19 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
+no_bcrypt = False
+try:
+	from flask_bcrypt import Bcrypt
+except ModuleNotFoundError as e:
+	no_bcrypt = True
 from flask_login import LoginManager
 from flask_mail import Mail
-from flask_assets import Environment, Bundle
+if not no_bcrypt:
+	from flask_assets import Environment, Bundle
 from clubsapp.config import Config
 
 db = SQLAlchemy()
-bcrypt = Bcrypt()
+if not no_bcrypt:
+	bcrypt = Bcrypt()
 login_manager = LoginManager()
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
@@ -15,20 +21,23 @@ mail = Mail()
 
 
 # Make sure this is a good way to deal with this
-js = Bundle('main.js', 'bootstrap.js',output='gen/all.js')
+if not no_bcrypt:
+	js = Bundle('main.js', 'bootstrap.js',output='gen/all.js')
 
 
 def create_app(config_class=Config):
 	app = Flask(__name__)
 	app.config.from_object(config_class)
-  
+	
 	db.init_app(app)
-	bcrypt.init_app(app)
+	if not no_bcrypt:
+		bcrypt.init_app(app)
 	login_manager.init_app(app)
 	mail.init_app(app)
 	
-	assets = Environment(app)
-	assets.register('all.js', js)
+	if not no_bcrypt:
+		assets = Environment(app)
+		assets.register('all.js', js)
 	# Import Blueprints
 	from clubsapp.main.routes import main
 	from clubsapp.users.routes import users
@@ -38,4 +47,3 @@ def create_app(config_class=Config):
 	app.register_blueprint(clubs)
 
 	return app
-  
