@@ -10,6 +10,7 @@ from clubsapp.clubs.forms import ClubRegistrationForm
 clubs = Blueprint('clubs', __name__)
 
 
+'''
 @clubs.route('/user_clubs/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def user_clubs(user_id):
@@ -28,5 +29,16 @@ def user_clubs(user_id):
 		flash('Your club has been created!', 'success')
 		return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
+'''
 
-
+@clubs.route('/user_clubs/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def user_clubs(user_id):
+	user = User.query.get_or_404(user_id)
+	print(user.firstname)
+	
+	form = CulbRegistrationForm()
+	if form.validate_on_submit():
+		flash('Created a club!')
+		return redirect(url_for('main.home'))
+	return render_template('user_clubs.html', user=user, form=form)
