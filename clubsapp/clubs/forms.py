@@ -11,7 +11,7 @@ class ClubRegistrationForm(FlaskForm):
     advisor = StringField('Advisor',
         validators=[DataRequired()],
         render_kw={"placeholder":"Enter Advisor Name"})
-    advisor_email = StringField('Advisor Email', 
+    email = StringField('Advisor Email', 
         validators=[DataRequired(), Email()],
         render_kw={"placeholder":"Enter Advisor Email"})
     submit = SubmitField('Add Club')
