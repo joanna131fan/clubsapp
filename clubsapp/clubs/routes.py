@@ -2,6 +2,7 @@
 from flask import Blueprint, render_template, url_for, redirect, request, flash
 from flask_login import current_user, login_required
 from clubsapp import db
+from clubsapp.utils import ROLES
 from clubsapp.models import Club, User
 from clubsapp.clubs.forms import ClubRegistrationForm
 
