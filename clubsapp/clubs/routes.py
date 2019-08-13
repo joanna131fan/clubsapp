@@ -21,7 +21,7 @@ def user_clubs(user_id):
 		if not advisor or advisor.role != ROLES['teacher']:
 			flash('That email does not belong to an advisor, or does not exist at all!', 'danger')
 			return
-		club = Club(name=form.name.data, bio='Default')
+		club = Club(name=form.name.data)
 		db.session.add(club)
 		db.session.commit()
 		club.members.append(advisor)
