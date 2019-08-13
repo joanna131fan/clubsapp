@@ -17,12 +17,13 @@ def user_clubs(user_id):
 	form = ClubRegistrationForm()
 	if form.validate_on_submit():
 		advisor = User.query.filter_by(email=form.email.data)
-		if not advisor:
-			flash('That advisor email does not exist!', 'danger')
+		if not advisor or advisor.role != ROLES['teacher']:
+			flash('That email does not belong to an advisor, or does not exist at all!', 'danger')
 			return
-		club = Club(name=form.name.data, bio='Default', advisor=advisor)
+		club = Club(name=form.name.data, bio='Default')
 		db.session.add(club)
 		db.session.commit()
+		club.members.append(advisor)
 		flash('Your club has been created!', 'success')
 		return redirect('user_clubs.html', clubs=clubs, user=user, form=form)
 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
