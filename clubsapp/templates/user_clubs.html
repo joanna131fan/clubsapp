@@ -7,6 +7,10 @@
       <p>Members: {{ club.members }}</p>
       <p>Advisor: {{ club.advisor }}</p>
     {% endfor %}
+  </div>
+{% endblock content %}
+{% block side_content %}
+  <div class="content-section">
     <form method="POST" action="">
       {{ form.hidden_tag() }}
       <fieldset class="form-group">
@@ -25,4 +29,4 @@
       </div>
     </form>
   </div>
-{% endblock content %}
+{% endblock side_content %}
