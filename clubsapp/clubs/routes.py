@@ -30,3 +30,13 @@ def user_clubs(user_id):
 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 
 
+@clubs.route("/record", methods=['GET', 'POST'])
+@login_required
+def record():
+    form = ClubMinutes()
+    return render_template('record.html', title='Record', form=form)
+
+@clubs.route("/view")
+@login_required
+def view():
+    return render_template('view.html', title='View')
