@@ -7,7 +7,8 @@ from clubsapp.utils import ROLES
 from flask_sqlalchemy import SQLAlchemy
 
 user_club_assoc_table = db.Table('user_club_assoc_table',
-	db.Column('user_id', db.Integer, db.ForeignKey('user.id')),									db.Column('club_id', db.Integer, db.ForeignKey('club.id')))
+	db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+	db.Column('club_id', db.Integer, db.ForeignKey('club.id')))
 
 roles = db.relationship('Role', secondary='user_roles',
                 backref=db.backref('users', lazy='dynamic'))

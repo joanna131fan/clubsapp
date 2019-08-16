@@ -1,10 +1,9 @@
-
 from flask import Blueprint, render_template, url_for, redirect, request, flash
 from flask_login import current_user, login_required
 from clubsapp import db
 from clubsapp.utils import ROLES
 from clubsapp.models import Club, User, club_query
-from clubsapp.clubs.forms import ClubRegistrationForm, ClubMinutes
+from clubsapp.clubs.forms import ClubRegistrationForm, ClubMinutes, AddMemberEntry
 
 
 clubs = Blueprint('clubs', __name__)
@@ -21,7 +20,7 @@ def user_clubs(user_id):
 		if not advisor or advisor.role != ROLES['teacher']:
 			flash('That email does not belong to an advisor, or does not exist at all!', 'danger')
 			return
-		club = Club(name=form.name.data, bio='Default')
+		club = Club(name=form.club_name.data, bio='Default')
 		db.session.add(club)
 		db.session.commit()
 		club.members.append(advisor)
@@ -29,6 +28,15 @@ def user_clubs(user_id):
 		return redirect('user_clubs.html', clubs=clubs, user=user, form=form)
 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 
+@clubs.route('/club_members/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def club_members(user_id):
+	user = User.query.get_or_404(user_id)
+	clubs = user.clubs
+	form = AddMemberEntry()
+	
+	#TODO form validation and db stuffos
+	return render_template('clubmembers.html', clubs=clubs, user=user, form=form)
 
 @clubs.route("/record", methods=['GET', 'POST'])
 @login_required
