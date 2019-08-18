@@ -19,14 +19,16 @@ def user_clubs(user_id):
 		advisor = User.query.filter_by(email=form.email.data)
 		if not advisor or advisor.role != ROLES['teacher']:
 			flash('That email does not belong to an advisor, or does not exist at all!', 'danger')
-			return
-		club = Club(name=form.club_name.data, bio='Default')
+      # what should this return?
+			return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
+		club = Club(name=form.club_name.data)
 		db.session.add(club)
 		db.session.commit()
 		club.members.append(advisor)
 		flash('Your club has been created!', 'success')
-		return redirect('user_clubs.html', clubs=clubs, user=user, form=form)
+		return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
+
 
 @clubs.route('/club_members/<int:user_id>', methods=['GET', 'POST'])
 @login_required
