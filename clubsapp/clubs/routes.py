@@ -16,8 +16,9 @@ def user_clubs(user_id):
 	clubs = user.clubs
 	form = ClubRegistrationForm()
 	if form.validate_on_submit():
-		advisor = User.query.filter_by(email=form.email.data)
-		if not advisor or advisor.role != ROLES['teacher']:
+		advisor = User.query.filter_by(email=form.email.data).first()
+		# TODO: Change this back to `ROLES['teacher']`
+		if not advisor or advisor.role != ROLES['student']: 
 			flash('That email does not belong to an advisor, or does not exist at all!', 'danger')
       # what should this return?
 			return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
