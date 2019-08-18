@@ -1,16 +1,14 @@
-
 from flask import Blueprint, render_template, url_for, redirect, request, flash
 from flask_login import current_user, login_required
 from clubsapp import db
 from clubsapp.utils import ROLES
-from clubsapp.models import Club, User
-from clubsapp.clubs.forms import ClubRegistrationForm
+from clubsapp.models import Club, User, club_query
+from clubsapp.clubs.forms import ClubRegistrationForm, ClubMinutes, AddMemberEntry
 
 
 clubs = Blueprint('clubs', __name__)
 
 
-'''
 @clubs.route('/user_clubs/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def user_clubs(user_id):
@@ -21,24 +19,34 @@ def user_clubs(user_id):
 		advisor = User.query.filter_by(email=form.email.data)
 		if not advisor or advisor.role != ROLES['teacher']:
 			flash('That email does not belong to an advisor, or does not exist at all!', 'danger')
+      # what should this return?
 			return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
-		club = Club(name=form.name.data)
+		club = Club(name=form.club_name.data)
 		db.session.add(club)
 		db.session.commit()
 		club.members.append(advisor)
 		flash('Your club has been created!', 'success')
 		return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
-'''
 
-@clubs.route('/user_clubs/<int:user_id>', methods=['GET', 'POST'])
+
+@clubs.route('/club_members/<int:user_id>', methods=['GET', 'POST'])
 @login_required
-def user_clubs(user_id):
+def club_members(user_id):
 	user = User.query.get_or_404(user_id)
-	print(user.firstname)
+	clubs = user.clubs
+	form = AddMemberEntry()
 	
-	form = CulbRegistrationForm()
-	if form.validate_on_submit():
-		flash('Created a club!')
-		return redirect(url_for('main.home'))
-	return render_template('user_clubs.html', user=user, form=form)
+	#TODO form validation and db stuffos
+	return render_template('clubmembers.html', clubs=clubs, user=user, form=form)
+
+@clubs.route("/record", methods=['GET', 'POST'])
+@login_required
+def record():
+    form = ClubMinutes()
+    return render_template('record.html', title='Record', form=form)
+
+@clubs.route("/view")
+@login_required
+def view():
+    return render_template('view.html', title='View')
