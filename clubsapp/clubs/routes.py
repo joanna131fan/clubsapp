@@ -30,15 +30,16 @@ def user_clubs(user_id):
 		return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 
-
+# idk if this needs to know the user id?
 @clubs.route('/club_members/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def club_members(user_id):
 	user = User.query.get_or_404(user_id)
 	clubs = user.clubs
 	form = AddMemberEntry()
-	
-	#TODO form validation and db stuffos
+	if form.validate_on_submit():
+		#TODO form validation and db stuffos
+		pass
 	return render_template('clubmembers.html', clubs=clubs, user=user, form=form)
 
 @clubs.route("/record", methods=['GET', 'POST'])
