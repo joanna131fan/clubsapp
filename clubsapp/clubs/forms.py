@@ -25,9 +25,10 @@ class AddMemberEntry(FlaskForm):
         query_factory=club_query, 
         allow_blank=True, 
         get_label='name')
+#TODO Fix Member Below:
     member = FieldList(StringField('Member Name', 
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Enter Full Name"}))
+        min_entries = 5,
+        render_kw={"placeholder": "Enter Full Name"})) 
     submit = SubmitField('Add Members')
 
 #class ClubMember(Field)

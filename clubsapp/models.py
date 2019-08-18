@@ -34,6 +34,10 @@ class Club(db.Model):
 	name = db.Column(db.String(100), unique=True, nullable=False)
 	members = db.relationship('User', secondary=user_club_assoc_table)
 
+	def __repr__(self):
+		return self.name
+
+
 def club_query():
 	return Club.query
 

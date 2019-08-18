@@ -2,6 +2,7 @@
 {%block content%}
 <h1>Club Members</h1>
 <div class="content-section">
+    {{ form.hidden_tag() }}
     <div class="form-group">
         {{ form.club_name.label(class="form-control-label")}}
         {{ form.club_name(class="form-control form control-lg")}}
