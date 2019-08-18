@@ -40,7 +40,7 @@ def club_members(user_id):
 	if form.validate_on_submit():
 		#TODO form validation and db stuffos
 		pass
-	return render_template('clubmembers.html', clubs=clubs, user=user, form=form)
+	return render_template('club_members.html', clubs=clubs, user=user, form=form)
 
 @clubs.route("/record", methods=['GET', 'POST'])
 @login_required
