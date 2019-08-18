@@ -18,7 +18,8 @@ class ClubRegistrationForm(FlaskForm):
         validators=[DataRequired(), Email()],
         render_kw={"placeholder":"Enter Advisor Email"})
     submit = SubmitField('Add Club')
-    
+ 
+
 class AddMemberEntry(FlaskForm):
     club_name = QuerySelectField('Club Name', 
         validators= [DataRequired()],
@@ -26,12 +27,13 @@ class AddMemberEntry(FlaskForm):
         allow_blank=True, 
         get_label='name')
 #TODO Fix Member Below:
-    member = FieldList(StringField('Member Name', 
-        min_entries = 5,
-        render_kw={"placeholder": "Enter Full Name"})) 
+    members = FieldList(StringField('Member Name', render_kw={"placeholder": "Enter Full Name"}), 
+        min_entries=5) 
     submit = SubmitField('Add Members')
 
+    
 #class ClubMember(Field)
+
 
 class ClubMinutes(FlaskForm):
     club_list = QuerySelectField('Club Name', 
