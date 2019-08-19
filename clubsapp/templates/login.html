@@ -1,7 +1,7 @@
-{%extends "layout.html"%}
-{%block content%}
+{% extends "layout.html" %}
+{% block content %}
 <h1>Login Page</h1>
-<div class = "content-section">
+<div class="content-section">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
@@ -12,7 +12,7 @@
                     {{ form.email(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.email.errors %}
-                            <span>error</span>
+                            <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                 {% else %}
@@ -20,12 +20,12 @@
                 {% endif %}
             </div>
             <div class="form-group">
-                {{ form.password.label(class="form-control-label")}}
+                {{ form.password.label(class="form-control-label") }}
                 {% if form.password.errors %}
                     {{ form.password(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.password.errors %}
-                            <span>error</span>
+                            <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                 {% else %}
@@ -34,13 +34,13 @@
             </div>
         </fieldset>
         <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info")}}
+            {{ form.submit(class="btn btn-outline-info") }}
         </div>
     </form>
 </div>
 <div class="border-top pt-3">
     <small class="text-muted">
-        <a class="ml-2" href="{{ url_for('users.register') }}">Don't Have An Account? </a>
+        <a class="ml-2" href="{{ url_for('users.register') }}">Don't Have An Account?</a>
     </small>
 </div>
-{%endblock%}
+{% endblock content %}
