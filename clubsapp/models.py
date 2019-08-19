@@ -41,8 +41,5 @@ class Club(db.Model):
 		return f'Club(name={self.name!r})'
 
 
-def club_query():
-	return Club.query
-
 # class Minutes(db.Model): 
 # 	id = db.Column(db.Integer, primary_key=True)
