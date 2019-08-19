@@ -33,7 +33,7 @@ class ClubRegistrationForm(FlaskForm):
 	submit = SubmitField('Add Club')
 
 
-def create_member_entry_form(user):
+def create_member_entry_form(user, num_members=5):
 	def user_club_query():
 		return user.clubs
 	
@@ -48,7 +48,8 @@ def create_member_entry_form(user):
 			StringField('Member Name', 
 			validators=[num_words(2)],
 			render_kw={"placeholder": "Enter Full Name"}),
-			min_entries=5)
+			min_entries=num_members,
+			max_entries=num_members)
 		submit = SubmitField('Add Members')
 		
 	return MemberEntryForm()
