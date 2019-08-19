@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField, FieldList, BooleanField, FormField
 from wtforms.validators import DataRequired, Email, ValidationError
 from wtforms.widgets import Input
-from clubsapp.models import Club, club_query
+from clubsapp.models import Club
 from wtforms_sqlalchemy.fields import QuerySelectField
 
 
@@ -53,7 +53,7 @@ def create_member_entry_form(user):
 		
 	return MemberEntryForm()
 
-
+'''
 class AddMemberEntry(FlaskForm):
 	club_name = QuerySelectField(
 		'Club Name', 
@@ -67,8 +67,23 @@ class AddMemberEntry(FlaskForm):
 		render_kw={"placeholder": "Enter Full Name"}),
 		min_entries=5)
 	submit = SubmitField('Add Members')
+'''
 
-
+def create_club_minutes_form(user):
+	def user_club_query():
+		return user.clubs
+	
+	class ClubMinutesForm(FlaskForm):
+		club_list = QuerySelectField(
+			'Club Name',
+			validators=[DataRequired()],
+			query_factory=user_club_query,
+			allow_blank=True,
+			get_label='name')
+		
+	return ClubMinutesForm()
+	
+'''
 class ClubMinutes(FlaskForm):
 	club_list = QuerySelectField(
 		'Club Name', 
@@ -76,4 +91,4 @@ class ClubMinutes(FlaskForm):
 		query_factory=club_query, 
 		allow_blank=True, 
 		get_label='name')
-
+'''

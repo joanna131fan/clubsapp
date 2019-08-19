@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from clubsapp import db
 from clubsapp.utils import ROLES
 from clubsapp.models import Club, User
-from clubsapp.clubs.forms import ClubRegistrationForm, ClubMinutes, AddMemberEntry, create_member_entry_form
+from clubsapp.clubs.forms import ClubRegistrationForm, create_member_entry_form, create_club_minutes_form
 
 
 clubs = Blueprint('clubs', __name__)
@@ -31,7 +31,7 @@ def user_clubs(user_id):
 		return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 
-# idk if this needs to know the user id?
+
 @clubs.route('/club_members/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def club_members(user_id):
@@ -56,11 +56,14 @@ def club_members(user_id):
 		return redirect(url_for('clubs.club_members', user_id=current_user.id))
 	return render_template('club_members.html', clubs=clubs, user=user, form=form)
 
-@clubs.route("/record", methods=['GET', 'POST'])
+
+@clubs.route("/record/<int:user_id>", methods=['GET', 'POST'])
 @login_required
-def record():
-    form = ClubMinutes()
+def record(user_id):
+    user = User.query.get_or_404(user_id)
+    form = create_club_minutes_form(user)
     return render_template('record.html', title='Record', form=form)
+
 
 @clubs.route("/view")
 @login_required
