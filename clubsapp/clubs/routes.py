@@ -41,16 +41,15 @@ def club_members(user_id):
 		print(club_to_join)
 		for field in form.members:
 			# check if member exists
-			name = field.data
+			first, last = field.data.split()
 			print(name)
-			member = User.query.filter_by(name=name).first()
+			member = User.query.filter_by(firstname=first, lastname=last).first()
 			if member:
 				member.clubs.append(Club.query.filter_by(name=club_to_join))
 				db.session.commit() # Do I need this?
 				print(member.clubs)
 				print(club.members)
 			else:
-				first, last = name.split()
 				new_member = User(firstname=first, lastname=last, email=f'{first}.{last}fakemail', password='NO_ACCOUNT_USER')
 				db.session.add(new_member)
 				new_member.clubs.append(club_to_join)
