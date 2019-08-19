@@ -2,8 +2,8 @@ from flask import Blueprint, render_template, url_for, redirect, request, flash
 from flask_login import current_user, login_required
 from clubsapp import db
 from clubsapp.utils import ROLES
-from clubsapp.models import Club, User, club_query
-from clubsapp.clubs.forms import ClubRegistrationForm, ClubMinutes, AddMemberEntry
+from clubsapp.models import Club, User
+from clubsapp.clubs.forms import ClubRegistrationForm, ClubMinutes, AddMemberEntry, create_member_entry_form
 
 
 clubs = Blueprint('clubs', __name__)
@@ -20,12 +20,13 @@ def user_clubs(user_id):
 		# TODO: Change this back to `ROLES['teacher']`
 		if not advisor or advisor.role != ROLES['student']: 
 			flash('That email does not belong to an advisor, or does not exist at all!', 'danger')
-      # what should this return?
+			# TODO: should this be a redirect?
 			return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 		club = Club(name=form.club_name.data)
 		db.session.add(club)
-		db.session.commit()
 		club.members.append(advisor)
+		user.clubs.append(club)
+		db.session.commit()
 		flash('Your club has been created!', 'success')
 		return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
@@ -35,11 +36,24 @@ def user_clubs(user_id):
 @login_required
 def club_members(user_id):
 	user = User.query.get_or_404(user_id)
-	clubs = user.clubs
-	form = AddMemberEntry()
+	form = create_member_entry_form(user)
 	if form.validate_on_submit():
-		#TODO form validation and db stuffos
-		pass
+		club_to_join = form.club_name.data # Is actual Club instance
+		for field in form.members:
+			try:
+				first, last = field.data.strip().split()
+			except ValueError as e:
+				continue # empty field
+			member = User.query.filter_by(firstname=first, lastname=last).first()
+			if member:
+				member.clubs.append(club_to_join)
+				db.session.commit()
+			else:
+				new_member = User(firstname=first, lastname=last, email=f'{first}.{last}fakemail', password='NO_ACCOUNT_USER')
+				db.session.add(new_member)
+				new_member.clubs.append(club_to_join)
+				db.session.commit()
+		return redirect(url_for('clubs.club_members', user_id=current_user.id))
 	return render_template('club_members.html', clubs=clubs, user=user, form=form)
 
 @clubs.route("/record", methods=['GET', 'POST'])
