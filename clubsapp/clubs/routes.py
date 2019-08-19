@@ -38,8 +38,11 @@ def club_members(user_id):
 	clubs = user.clubs
 	form = AddMemberEntry()
 	if form.validate_on_submit():
-		#TODO form validation and db stuffos
-		pass
+		club_to_join = form.club.data
+		print(club_to_join)
+		for member in form.members:
+			print(member)
+		return redirect(url_for('club_members'))
 	return render_template('club_members.html', clubs=clubs, user=user, form=form)
 
 @clubs.route("/record", methods=['GET', 'POST'])
