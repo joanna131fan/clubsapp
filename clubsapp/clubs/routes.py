@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, url_for, redirect, request, flash
 from flask_login import current_user, login_required
 from clubsapp import db
 from clubsapp.utils import ROLES
-from clubsapp.models import Club, User, club_query
+from clubsapp.models import Club, User
 from clubsapp.clubs.forms import ClubRegistrationForm, ClubMinutes, AddMemberEntry, create_member_entry_form
 
 
@@ -36,7 +36,6 @@ def user_clubs(user_id):
 @login_required
 def club_members(user_id):
 	user = User.query.get_or_404(user_id)
-	#form = AddMemberEntry() # Pass in user to get their clubs
 	form = create_member_entry_form(user)
 	if form.validate_on_submit():
 		club_to_join = form.club_name.data # Is actual Club instance
