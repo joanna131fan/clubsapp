@@ -37,25 +37,21 @@ def club_members(user_id):
 	user = User.query.get_or_404(user_id)
 	form = AddMemberEntry()
 	if form.validate_on_submit():
-		club_to_join = form.club_name.data
-		print(club_to_join)
+		club_to_join = form.club_name.data # Is actual Club instance
 		for field in form.members:
-			# check if member exists
-			first, last = field.data.split()
-			print(first, last)
+			try:
+				first, last = field.data.split()
+			except ValueError as e:
+				continue # empty field
 			member = User.query.filter_by(firstname=first, lastname=last).first()
 			if member:
-				member.clubs.append(Club.query.filter_by(name=club_to_join))
-				db.session.commit() # Do I need this?
-				print(member.clubs)
-				print(club.members)
+				member.clubs.append(club_to_join)
+				db.session.commit()
 			else:
 				new_member = User(firstname=first, lastname=last, email=f'{first}.{last}fakemail', password='NO_ACCOUNT_USER')
 				db.session.add(new_member)
 				new_member.clubs.append(club_to_join)
 				db.session.commit()
-				print(new_member.clubs)
-				print(club.members)
 		return redirect(url_for('clubs.club_members'))
 	return render_template('club_members.html', clubs=clubs, user=user, form=form)
 
