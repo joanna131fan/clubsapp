@@ -27,6 +27,9 @@ class User(db.Model, UserMixin):
 	password = db.Column(db.String(60), nullable=False)
 	role = db.Column(db.Integer(), nullable=False, default=ROLES['student'])
 	clubs = db.relationship('Club', secondary=user_club_assoc_table)
+	
+	def __repr__(self):
+		return f'User(firstname={self.firstname!r}, lastname={self.lastname!r})'
 
 
 class Club(db.Model):
@@ -35,7 +38,7 @@ class Club(db.Model):
 	members = db.relationship('User', secondary=user_club_assoc_table)
 
 	def __repr__(self):
-		return self.name
+		return f'Club(name={self.name!r})'
 
 
 def club_query():
