@@ -42,7 +42,7 @@ def club_members(user_id):
 		for field in form.members:
 			# check if member exists
 			first, last = field.data.split()
-			print(name)
+			print(first, last)
 			member = User.query.filter_by(firstname=first, lastname=last).first()
 			if member:
 				member.clubs.append(Club.query.filter_by(name=club_to_join))
