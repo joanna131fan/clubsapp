@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField, FieldList, BooleanField, FormField
 from wtforms.validators import DataRequired, Email, ValidationError
 from wtforms.widgets import Input
-from clubsapp.models import Club, club_query
+from clubsapp.models import Club
 from wtforms_sqlalchemy.fields import QuerySelectField
 
 
