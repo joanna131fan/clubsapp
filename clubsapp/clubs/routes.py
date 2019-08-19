@@ -20,7 +20,7 @@ def user_clubs(user_id):
 		# TODO: Change this back to `ROLES['teacher']`
 		if not advisor or advisor.role != ROLES['student']: 
 			flash('That email does not belong to an advisor, or does not exist at all!', 'danger')
-      # what should this return?
+			# TODO: should this be a redirect?
 			return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 		club = Club(name=form.club_name.data)
 		db.session.add(club)
@@ -35,14 +35,29 @@ def user_clubs(user_id):
 @login_required
 def club_members(user_id):
 	user = User.query.get_or_404(user_id)
-	clubs = user.clubs
 	form = AddMemberEntry()
 	if form.validate_on_submit():
-		club_to_join = form.club.data
+		club_to_join = form.club_name.data
 		print(club_to_join)
-		for member in form.members:
-			print(member)
-		return redirect(url_for('club_members'))
+		for field in form.members:
+			# check if member exists
+			name = field.data
+			print(name)
+			member = User.query.filter_by(name=name).first()
+			if member:
+				member.clubs.append(Club.query.filter_by(name=club_to_join))
+				db.session.commit() # Do I need this?
+				print(member.clubs)
+				print(club.members)
+			else:
+				first, last = name.split()
+				new_member = User(firstname=first, lastname=last, email=f'{first}.{last}fakemail', password='NO_ACCOUNT_USER')
+				db.session.add(new_member)
+				new_member.clubs.append(club_to_join)
+				db.session.commit()
+				print(new_member.clubs)
+				print(club.members)
+		return redirect(url_for('clubs.club_members'))
 	return render_template('club_members.html', clubs=clubs, user=user, form=form)
 
 @clubs.route("/record", methods=['GET', 'POST'])
