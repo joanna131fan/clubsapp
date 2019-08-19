@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from clubsapp import db
 from clubsapp.utils import ROLES
 from clubsapp.models import Club, User, club_query
-from clubsapp.clubs.forms import ClubRegistrationForm, ClubMinutes, AddMemberEntry
+from clubsapp.clubs.forms import ClubRegistrationForm, ClubMinutes, AddMemberEntry, create_member_entry_form
 
 
 clubs = Blueprint('clubs', __name__)
@@ -24,8 +24,9 @@ def user_clubs(user_id):
 			return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 		club = Club(name=form.club_name.data)
 		db.session.add(club)
-		db.session.commit()
 		club.members.append(advisor)
+		user.clubs.append(club)
+		db.session.commit()
 		flash('Your club has been created!', 'success')
 		return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
@@ -35,12 +36,13 @@ def user_clubs(user_id):
 @login_required
 def club_members(user_id):
 	user = User.query.get_or_404(user_id)
-	form = AddMemberEntry()
+	#form = AddMemberEntry() # Pass in user to get their clubs
+	form = create_member_entry_form(user)
 	if form.validate_on_submit():
 		club_to_join = form.club_name.data # Is actual Club instance
 		for field in form.members:
 			try:
-				first, last = field.data.split()
+				first, last = field.data.strip().split()
 			except ValueError as e:
 				continue # empty field
 			member = User.query.filter_by(firstname=first, lastname=last).first()
@@ -52,7 +54,7 @@ def club_members(user_id):
 				db.session.add(new_member)
 				new_member.clubs.append(club_to_join)
 				db.session.commit()
-		return redirect(url_for('clubs.club_members'))
+		return redirect(url_for('clubs.club_members', user_id=current_user.id))
 	return render_template('club_members.html', clubs=clubs, user=user, form=form)
 
 @clubs.route("/record", methods=['GET', 'POST'])
