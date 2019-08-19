@@ -15,3 +15,4 @@ class Config:
 	MAIL_USE_TLS = True
 	MAIL_USERNAME = target['EMAIL_USER']
 	MAIL_PASSWORD = target['EMAIL_APP_PASS']
+	DEVICE_TYPE = target['DEVICE_TYPE']
