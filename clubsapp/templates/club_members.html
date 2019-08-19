@@ -11,7 +11,7 @@
                 {{ form.club_name(class="form-control form control-lg")}}
             </div>
             <div class="form-group">
-                {% for member in members %}
+                {% for member in form.members %}
                     {{ member.label(class="form-control-label") }}
                     {{ member(class="form-control form control-lg") }}
                 {% endfor %}
