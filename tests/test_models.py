@@ -15,4 +15,4 @@ def test_new_user():
 	assert user.email = 'BobWhite@gmail.com'
 	assert user.password == 'password123!' # Check hashing later
 	assert user.role == ROLES['STUDENT']
-	assert user.members = []
+	assert user.members == []
