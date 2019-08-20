@@ -30,6 +30,9 @@ def create_app(config_class=Config):
 	app.config.from_object(config_class)
 	
 	db.init_app(app)
+	if app.testing:
+		prepare_db(app)
+	
 	if not no_bcrypt:
 		bcrypt.init_app(app)
 	login_manager.init_app(app)
@@ -47,3 +50,23 @@ def create_app(config_class=Config):
 	app.register_blueprint(clubs)
 
 	return app
+	
+	
+	
+def prepare_db(app):
+	from clubsapp.models import User, Club
+	
+	with app.app_context():
+		db.drop_all()
+		db.create_all()
+		
+		test_student = User(firstname='Test', lastname='User', email='test@gmail.com', password='test')
+		test_teacher = User(firstname='Test', lastname='Teacher', email='teacher@gmail.com', password='test')
+		test_club = Club(name='Test Club')
+		db.session.add(test_student)
+		db.session.add(test_teacher)
+		db.session.add(test_club)
+		test_club.members.extend([test_student, test_teacher])
+		
+		db.session.commit()
+		db.session.close()

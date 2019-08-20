@@ -16,3 +16,11 @@ class Config:
 	MAIL_USERNAME = target['EMAIL_USER']
 	MAIL_PASSWORD = target['EMAIL_APP_PASS']
 	DEVICE_TYPE = target['DEVICE_TYPE']
+	WTF_CSRF_ENABLED = True
+
+	
+class TestingConfig(Config):
+	SECRET_KEY = 'should_be_a_long_random_string'
+	SQLALCHEMY_DATABASE_URI = 'sqlite:///testing.db'
+	TESTING = True
+	WTF_CSRF_ENABLED = False
