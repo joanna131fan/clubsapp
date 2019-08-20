@@ -67,7 +67,7 @@ def add_club_members(user_id, num_members):
 				new_member.clubs.append(club_to_join)
 				db.session.commit()
 		return redirect(url_for('clubs.club_members', user_id=current_user.id))
-	return render_template('club_members.html', clubs=clubs, user=user, form=form)
+	return render_template('add_club_members.html', clubs=clubs, user=user, form=form)
 
 
 @clubs.route("/record/<int:user_id>", methods=['GET', 'POST'])
