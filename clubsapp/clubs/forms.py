@@ -1,11 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField, FieldList, BooleanField, FormField
-from wtforms.validators import DataRequired, Email, ValidationError
+from wtforms.validators import DataRequired, Email, NumberRange, ValidationError
 from wtforms.widgets import Input
 from clubsapp.models import Club
 from wtforms_sqlalchemy.fields import QuerySelectField
 
-
+# --[ Validators
 def num_words(num):
 	msg = f'Must be made up of exactly {num} words'
 
@@ -16,7 +16,7 @@ def num_words(num):
 
 	return num_words_val
 
-
+# --[ Forms
 class ClubRegistrationForm(FlaskForm):
 	club_name = StringField(
 		'Club Name',
@@ -33,6 +33,14 @@ class ClubRegistrationForm(FlaskForm):
 	submit = SubmitField('Add Club')
 
 
+class NumMembersToAddForm(FlaskForm):
+	num_members = IntegerField(
+		'Number of Members',
+		validators=[DataRequired(), NumberRange(min=1, max=50)],
+		render_kw={'placeholder': 'Enter # of Members'})
+	submit = SubmitField('Submit')
+	
+	
 def create_member_entry_form(user, num_members=5):
 	def user_club_query():
 		return user.clubs

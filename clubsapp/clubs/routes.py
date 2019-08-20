@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from clubsapp import db
 from clubsapp.utils import ROLES
 from clubsapp.models import Club, User
-from clubsapp.clubs.forms import ClubRegistrationForm, create_member_entry_form, create_club_minutes_form
+from clubsapp.clubs.forms import ClubRegistrationForm, NumMembersToAddForm, create_member_entry_form, create_club_minutes_form
 
 
 clubs = Blueprint('clubs', __name__)
@@ -34,9 +34,22 @@ def user_clubs(user_id):
 
 @clubs.route('/club_members/<int:user_id>', methods=['GET', 'POST'])
 @login_required
-def club_members(user_id):
+def num_club_members(user_id):
+	'''Allows users to select how many members they want to add.'''
 	user = User.query.get_or_404(user_id)
-	form = create_member_entry_form(user)
+	form = NumMembersToAddForm()
+	if form.validate_on_submit():
+		# send user to the add_club_members
+		num_members = form.num_members.data
+		return redirect(url_for('clubs.add_club_members', user_id=user_id, num_members=num_members))
+	return render_template('num_club_members.html', user=user, form=form)
+
+@clubs.route('/club_members/<int:user_id>/<int:num_members>', methods=['GET', 'POST'])
+@login_required
+def add_club_members(user_id, num_members):
+	'''Allows user to add members to their club, based on output from previous form.'''
+	user = User.query.get_or_404(user_id)
+	form = create_member_entry_form(user=user, num_members=num_members)
 	if form.validate_on_submit():
 		club_to_join = form.club_name.data # Is actual Club instance
 		for field in form.members:
