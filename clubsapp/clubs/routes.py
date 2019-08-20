@@ -28,7 +28,7 @@ def user_clubs(user_id):
 		user.clubs.append(club)
 		db.session.commit()
 		flash('Your club has been created!', 'success')
-		return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
+		return redirect('clubs.user_clubs', user_id=user_id)
 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 
 
@@ -66,7 +66,7 @@ def add_club_members(user_id, num_members):
 				db.session.add(new_member)
 				new_member.clubs.append(club_to_join)
 				db.session.commit()
-		return redirect(url_for('clubs.club_members', user_id=current_user.id))
+		return redirect(url_for('main.home'))
 	return render_template('add_club_members.html', clubs=clubs, user=user, form=form)
 
 
