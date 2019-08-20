@@ -28,7 +28,7 @@ def user_clubs(user_id):
 		user.clubs.append(club)
 		db.session.commit()
 		flash('Your club has been created!', 'success')
-		return redirect('clubs.user_clubs', user_id=user_id)
+		return redirect(url_for('clubs.user_clubs', user_id=user_id))
 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 
 
