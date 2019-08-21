@@ -93,11 +93,11 @@ li {
 }
 
 
-
 /*table*/
 table {
     border-collapse: collapse;
     border: 2px solid rgb(200,200,200);
+    color: rgb(26, 4, 4) !important;
     letter-spacing: 1px;
     font-size: 0.8rem;
     float: center;
@@ -109,7 +109,7 @@ table {
   }
   
   th {
-    background-color: rgb(235,235,235);
+    color: rgb(26, 4, 4);
   }
   
   td {

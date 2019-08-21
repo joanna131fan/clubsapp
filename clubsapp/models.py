@@ -40,6 +40,5 @@ class Club(db.Model):
 	def __repr__(self):
 		return f'Club(name={self.name!r})'
 
-
 # class Minutes(db.Model): 
 # 	id = db.Column(db.Integer, primary_key=True)

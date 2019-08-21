@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from clubsapp import db
 from clubsapp.utils import ROLES
 from clubsapp.models import Club, User
-from clubsapp.clubs.forms import ClubRegistrationForm, NumMembersToAddForm, create_member_entry_form, create_club_minutes_form
+from clubsapp.clubs.forms import ClubRegistrationForm, NumMembersToAddForm, create_member_entry_form, create_club_minutes_form, record_club_name_form
 
 
 clubs = Blueprint('clubs', __name__)
@@ -69,14 +69,28 @@ def add_club_members(user_id, num_members):
 		return redirect(url_for('main.home'))
 	return render_template('add_club_members.html', clubs=clubs, user=user, form=form)
 
-
-@clubs.route("/record/<int:user_id>", methods=['GET', 'POST'])
+@clubs.route("/record_minutes/<int:user_id>", methods=['GET', 'POST'])
 @login_required
-def record(user_id):
+def record_club_name(user_id):
     user = User.query.get_or_404(user_id)
-    form = create_club_minutes_form(user)
-    return render_template('record.html', title='Record', form=form)
+    form = record_club_name_form(user)
+    if form.validate_on_submit():
+		# send user to the record_club_minutes
+        club = form.club_list.data
+        return redirect(url_for('clubs.record_club_minutes', user_id=user_id, club=club))
+    return render_template('record_club_name.html', title='Record', form=form, user=user)
 
+@clubs.route("/record_minutes/<int:user_id>/record", methods=['GET', 'POST'])
+@login_required
+def record_club_minutes(user_id, club):
+    user = User.query.get_or_404(user_id)
+    form = create_club_minutes_form(user, club)
+    member = User.query.order_by(User.firstname, User.lastname).all()
+    if member.clubs(club):
+        officialmember = member
+    if form.validate_on_submit():
+        pass
+    return render_template('record_minutes.html', title='Record', form=form, user=user, club=club, members=officialmember)
 
 @clubs.route("/view")
 @login_required

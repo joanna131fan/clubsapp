@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField, FieldList, BooleanField, FormField
+from wtforms import StringField, SubmitField, IntegerField, FieldList, BooleanField, FormField, DateField
 from wtforms.validators import DataRequired, Email, NumberRange, ValidationError
 from wtforms.widgets import Input
 from clubsapp.models import Club
@@ -78,26 +78,34 @@ class AddMemberEntry(FlaskForm):
 	submit = SubmitField('Add Members')
 '''
 
-def create_club_minutes_form(user):
+def record_club_name_form(user):
 	def user_club_query():
 		return user.clubs
 	
-	class ClubMinutesForm(FlaskForm):
+	class ClubNameMinutesForm(FlaskForm):
 		club_list = QuerySelectField(
 			'Club Name',
 			validators=[DataRequired()],
 			query_factory=user_club_query,
 			allow_blank=True,
 			get_label='name')
+		submit = SubmitField('Submit')
+		
+	return ClubNameMinutesForm()
+
+def create_club_minutes_form(user, club_name):
+	
+	class ClubMinutesForm(FlaskForm):
+		club = club_name
+		is_here = BooleanField('Here')
+		submit = SubmitField('Submit')
 		
 	return ClubMinutesForm()
-	
-'''
-class ClubMinutes(FlaskForm):
-	club_list = QuerySelectField(
-		'Club Name', 
-		validators=[DataRequired()],
-		query_factory=club_query, 
-		allow_blank=True, 
-		get_label='name')
-'''
+# class ClubMinutes(FlaskForm):
+# 	club_list = QuerySelectField(
+# 		'Club Name', 
+# 		validators=[DataRequired()],
+# 		query_factory=club_query,
+# 		allow_blank=True, 
+# 		get_label='name')
+
