@@ -72,27 +72,30 @@ def add_club_members(user_id, num_members):
 @clubs.route("/record_minutes/<int:user_id>", methods=['GET', 'POST'])
 @login_required
 def record_club_name(user_id):
-    user = User.query.get_or_404(user_id)
-    form = record_club_name_form(user)
-    if form.validate_on_submit():
+	user = User.query.get_or_404(user_id)
+	# TODO: use the same form
+	form = record_club_name_form(user)
+	if form.validate_on_submit():
 		# send user to the record_club_minutes
-        club = form.club_list.data
-        return redirect(url_for('clubs.record_club_minutes', user_id=user_id, club=club))
-    return render_template('record_club_name.html', title='Record', form=form, user=user)
+        	club = form.club_list.data
+        	return redirect(url_for('clubs.record_club_minutes', user_id=user_id, club_id=club.id))
+	return render_template('record_club_name.html', title='Record', form=form, user=user)
 
 @clubs.route("/record_minutes/<int:user_id>/record", methods=['GET', 'POST'])
 @login_required
-def record_club_minutes(user_id, club):
-    user = User.query.get_or_404(user_id)
-    form = create_club_minutes_form(user, club)
-    member = User.query.order_by(User.firstname, User.lastname).all()
-    if member.clubs(club):
-        officialmember = member
-    if form.validate_on_submit():
-        pass
-    return render_template('record_minutes.html', title='Record', form=form, user=user, club=club, members=officialmember)
+def record_club_minutes(user_id, club_id):
+	user = User.query.get_or_404(user_id)
+	club = Club.query.get_or_404(club_id)
+	members = club.members
+	form = create_club_minutes_form(club)
+	if form.validate_on_submit():
+		# actually update attendance here
+		flash('Attendance updated successfully', 'success')
+		return redirect(url_for('main.home'))
+	
+	return render_template('record_minutes.html', title='Record', form=form, user=user, members=members)
 
 @clubs.route("/view")
 @login_required
 def view():
-    return render_template('view.html', title='View')
+	return render_template('view.html', title='View')
