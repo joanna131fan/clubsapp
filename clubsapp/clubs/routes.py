@@ -81,7 +81,7 @@ def record_club_name(user_id):
         	return redirect(url_for('clubs.record_club_minutes', user_id=user_id, club_id=club.id))
 	return render_template('record_club_name.html', title='Record', form=form, user=user)
 
-@clubs.route("/record_minutes/<int:user_id>/record", methods=['GET', 'POST'])
+@clubs.route("/record_minutes/<int:user_id>/<int:club_id>/record", methods=['GET', 'POST'])
 @login_required
 def record_club_minutes(user_id, club_id):
 	user = User.query.get_or_404(user_id)
