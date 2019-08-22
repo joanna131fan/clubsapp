@@ -62,21 +62,6 @@ def create_member_entry_form(user, num_members=5):
 		
 	return MemberEntryForm()
 
-'''
-class AddMemberEntry(FlaskForm):
-	club_name = QuerySelectField(
-		'Club Name', 
-		validators=[DataRequired()],
-		query_factory=club_query,
-		allow_blank=True, 
-		get_label='name')
-	members = FieldList(
-		StringField('Member Name', 
-		validators=[num_words(2)], 
-		render_kw={"placeholder": "Enter Full Name"}),
-		min_entries=5)
-	submit = SubmitField('Add Members')
-'''
 
 def record_club_name_form(user):
 	def user_club_query():
@@ -93,19 +78,14 @@ def record_club_name_form(user):
 		
 	return ClubNameMinutesForm()
 
-def create_club_minutes_form(user, club_name):
-	
+def create_club_minutes_form(club):
+	num_members = len(club.members)
 	class ClubMinutesForm(FlaskForm):
-		club = club_name
-		is_here = BooleanField('Here')
+		attendance = FieldList(BooleanField('Here'),
+			min_entries=num_members,
+			max_entries=num_members)
 		submit = SubmitField('Submit')
 		
 	return ClubMinutesForm()
-# class ClubMinutes(FlaskForm):
-# 	club_list = QuerySelectField(
-# 		'Club Name', 
-# 		validators=[DataRequired()],
-# 		query_factory=club_query,
-# 		allow_blank=True, 
-# 		get_label='name')
+
 
