@@ -81,10 +81,9 @@ def record_club_name_form(user):
 def create_club_minutes_form(club):
 	num_members = len(club.members)
 	class ClubMinutesForm(FlaskForm):
-		datetime = DateField('mm/dd/year',
+		date = DateField('Meeting Date (dd/mm/year',
 			validators=[DataRequired()],
-			format = '%d/%m/%Y'
-			)
+			format = '%d/%m/%Y')
 		attendance = FieldList(BooleanField('Here'),
 			min_entries=num_members,
 			max_entries=num_members)

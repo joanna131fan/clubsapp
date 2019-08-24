@@ -63,7 +63,12 @@
     {% for club in clubs %}
     <tr>
       <td>{{ club.name }}</td>
-      <td>{{ club.members }}</td>
+      <td>{% for member in club.members%}
+            {{ member.firstname }} 
+            {{ member.lastname }}
+            <br>
+          {% endfor %}
+      </td>
     </tr>
     {% endfor %}
   </div>

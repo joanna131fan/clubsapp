@@ -95,18 +95,18 @@ li {
 
 /*table*/
 table {
-    border-collapse: collapse;
-    border: 2px solid rgb(200,200,200);
     border-radius: 5px;
     color: rgb(26, 4, 4) !important;
     letter-spacing: 1px;
     font-size: 0.8rem;
-    float: center;
+    text-align: inherit;
+    width: 400px;
   }
   
-  td, th {
-    border: 1px solid rgb(190,190,190);
-    padding: 10px 20px;
+  table, td, th {
+    border: 1px;
+    padding: 5px 5px;
+    border-bottom: 1px solid #ddd;
   }
   
   th {
