@@ -7,20 +7,31 @@
         <fieldset class="form-group">
             <legend class="border-bottom mb-4"> Record </legend>
             <div class="form-group">
-                {% for attend in form.attendance %}
-                	{% set i = loop.index - 1 %}
-                    <label for="{{ i }}"> {{ members[i].firstname }} {{ members[i].lastname }} </label>
-                    {% if attend.errors %}
-                        {{ attend(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in attend.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ attend(class="form-control form-control-lg") }}
-                    {% endif %}
-                {% endfor %}
+                <label> Attendance </label>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Is here?</th>
+                    </tr>
+                    {% for attend in form.attendance %}
+                        {% set i = loop.index - 1 %}
+                        <tr>
+                        <td for="{{ i }}"> {{ members[i].firstname }} {{ members[i].lastname }} </td>
+                            <td>
+                            {% if attend.errors %}
+                                {{ attend(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in attend.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ attend(class="form-control form-control-lg") }}
+                            {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
             </div>
         </fieldset>
         <div class="form-group">

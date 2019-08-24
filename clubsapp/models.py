@@ -29,7 +29,7 @@ class User(db.Model, UserMixin):
 	clubs = db.relationship('Club', secondary=user_club_assoc_table)
 	
 	def __repr__(self):
-		return f'User(firstname={self.firstname!r}, lastname={self.lastname!r})'
+		return f'{self.firstname} {self.lastname}' #return f'User(firstname={self.firstname!r}, lastname={self.lastname!r})'
 
 
 class Club(db.Model):

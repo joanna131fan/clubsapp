@@ -53,10 +53,19 @@
   </div>
 {% endblock content %}
 {% block side_content %}
+<table>
+  <tr>
+    <th>Club</th>
+    <th>Members</th>
+  </tr>
+
   <div class="content-section">
     {% for club in clubs %}
-      <p>Club Name: {{ club.name }}</p>
-      <p>Members: {{ club.members }}</p>
+    <tr>
+      <td>{{ club.name }}</td>
+      <td>{{ club.members }}</td>
+    </tr>
     {% endfor %}
   </div>
+</table>
 {% endblock side_content %}

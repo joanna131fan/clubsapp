@@ -35,7 +35,7 @@ class ClubRegistrationForm(FlaskForm):
 
 class NumMembersToAddForm(FlaskForm):
 	num_members = IntegerField(
-		'Number of Members',
+		'Number of Members Being Added',
 		validators=[DataRequired(), NumberRange(min=1, max=50)],
 		render_kw={'placeholder': 'Enter # of Members'})
 	submit = SubmitField('Submit')
@@ -81,6 +81,10 @@ def record_club_name_form(user):
 def create_club_minutes_form(club):
 	num_members = len(club.members)
 	class ClubMinutesForm(FlaskForm):
+		datetime = DateField('mm/dd/year',
+			validators=[DataRequired()],
+			format = '%d/%m/%Y'
+			)
 		attendance = FieldList(BooleanField('Here'),
 			min_entries=num_members,
 			max_entries=num_members)
