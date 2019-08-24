@@ -73,7 +73,7 @@ form{
     color: white;
     background-color: rgba(186, 208, 240, 0.705) !important;
     border: 1px solid rgba(162, 185, 228, 0.753);
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .form-group {
@@ -84,6 +84,7 @@ form{
     color: #CCC;
     opacity: 1;
     font-family: 'Source Sans Pro', sans-serif;
+    font-size: 18px;
 }
 
 li {
