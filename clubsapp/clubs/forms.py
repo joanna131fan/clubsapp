@@ -1,9 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField, FieldList, BooleanField, FormField, DateField, TextAreaField
 from wtforms.validators import DataRequired, Email, NumberRange, ValidationError, Length
+from wtforms_components import TimeField, DateRange
 from wtforms.widgets import Input
 from clubsapp.models import Club
 from wtforms_sqlalchemy.fields import QuerySelectField
+from datetime import datetime, date
 
 # --[ Validators
 def num_words(num):
@@ -82,12 +84,16 @@ def create_club_minutes_form(club):
 	num_members = len(club.members)
 	class ClubMinutesForm(FlaskForm):
 		date = DateField('Meeting Date (dd/mm/year)',
-			validators=[DataRequired()],
+			validators=[DataRequired(), DateRange(max = date.today())],
 			format = '%d/%m/%Y')
+		time = TimeField('Meeting Called to Order at')
+		location = StringField('Meeting Place',
+			validators=[DataRequired()],
+			render_kw={"placeholder":"Room # or Area"})
 		attendance = FieldList(BooleanField('Here'),
 			min_entries=num_members,
 			max_entries=num_members)
-		notes = TextAreaField('Meeting Notes', 
+		notes = TextAreaField('Overview of Meeting', 
 			validators=[DataRequired(), Length(min=10, max=400)])
 		submit = SubmitField('Submit')
 		
