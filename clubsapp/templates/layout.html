@@ -53,7 +53,7 @@
   <!-- a row groups things together in a row. -->
   <div class="row">
     <!-- a bootstrap row has 12 columns. This is saying everything within this col will take up 8 cols -->
-    <div class="col-md-6 offset-md-3">
+    <div class="col-md-8 offset-md-2">
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           {% for category, message in messages %}
@@ -65,7 +65,7 @@
       {% endwith %}
       {% block content %} {% endblock %}
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
       {% block side_content %}{% endblock %}
     </div>
   </div>

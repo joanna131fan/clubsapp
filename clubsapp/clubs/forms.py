@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField, FieldList, BooleanField, FormField, DateField, TextAreaField
+from wtforms import StringField, SubmitField, IntegerField, FieldList, BooleanField, FormField, DateField, TextAreaField, DecimalField
 from wtforms.validators import DataRequired, Email, NumberRange, ValidationError, Length
 from wtforms_components import TimeField, DateRange
 from wtforms.widgets import Input
@@ -80,6 +80,21 @@ def record_club_name_form(user):
 		
 	return ClubNameMinutesForm()
 
+class PurchaseOrderForms(FlaskForm):
+	payable_to = StringField('Payable To')
+	amount = DecimalField('Amount', places=2,
+		render_kw={"placeholder":"00.00"})
+	expenditure = StringField('Purchase of Expenditure', 
+		render_kw={"placeholder":"Expenditure"})
+
+class MotionForms(FlaskForm):
+	motionedby = StringField('Motioned By',
+		render_kw={"placeholder":"Name"})
+	secondby = StringField('Seconded By',
+		render_kw={"placeholder":"Name"})
+	numfor = IntegerField('Number For')
+	numagainst = IntegerField('Number Against')
+
 def create_club_minutes_form(club):
 	num_members = len(club.members)
 	class ClubMinutesForm(FlaskForm):
@@ -93,6 +108,10 @@ def create_club_minutes_form(club):
 		attendance = FieldList(BooleanField('Here'),
 			min_entries=num_members,
 			max_entries=num_members)
+		purchaseform = FieldList(FormField(PurchaseOrderForms), 
+			min_entries=5, 
+			max_entries=5)
+		purchasevote = FormField(MotionForms)
 		notes = TextAreaField('Overview of Meeting', 
 			validators=[DataRequired(), Length(min=10, max=400)])
 		submit = SubmitField('Submit')
