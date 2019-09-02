@@ -23,6 +23,7 @@ def user_clubs(user_id):
 			# TODO: should this be a redirect?
 			return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 		club = Club(name=form.club_name.data)
+		# TODO: ADD CHECK UNIQUE CLUB
 		db.session.add(club)
 		club.members.append(advisor)
 		user.clubs.append(club)

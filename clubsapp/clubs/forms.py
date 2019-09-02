@@ -84,7 +84,15 @@ class PurchaseOrderForms(FlaskForm):
 	payable_to = StringField('Payable To')
 	amount = DecimalField('Amount', places=2,
 		render_kw={"placeholder":"00.00"})
-	expenditure = StringField('Purchase of Expenditure', 
+	expenditure = StringField('Purpose of Expenditure', 
+		render_kw={"placeholder":"Expenditure"})
+
+class FundraiserForms(FlaskForm):
+	descript = StringField('Fundraiser Description')
+	proposeddate = DateField('Proposed Date (dd/mm/year)',
+			validators=[DateRange(min = date.today())],
+			format = '%d/%m/%Y')
+	expenditure = StringField('Purpose of Expenditure',
 		render_kw={"placeholder":"Expenditure"})
 
 class MotionForms(FlaskForm):
@@ -92,8 +100,10 @@ class MotionForms(FlaskForm):
 		render_kw={"placeholder":"Name"})
 	secondby = StringField('Seconded By',
 		render_kw={"placeholder":"Name"})
-	numfor = IntegerField('Number For')
-	numagainst = IntegerField('Number Against')
+	numfor = IntegerField('Number For',
+		render_kw={"placeholder":"#"})
+	numagainst = IntegerField('Number Against',
+		render_kw={"placeholder":"#"})
 
 def create_club_minutes_form(club):
 	num_members = len(club.members)
@@ -112,6 +122,9 @@ def create_club_minutes_form(club):
 			min_entries=5, 
 			max_entries=5)
 		purchasevote = FormField(MotionForms)
+		fundform = FieldList(FormField(FundraiserForms), 
+			min_entries=5, 
+			max_entries=5)
 		notes = TextAreaField('Overview of Meeting', 
 			validators=[DataRequired(), Length(min=10, max=400)])
 		submit = SubmitField('Submit')
