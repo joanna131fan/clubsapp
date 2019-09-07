@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField, FieldList, BooleanField, FormField, DateField, TextAreaField, DecimalField
-from wtforms.validators import DataRequired, Email, NumberRange, ValidationError, Length
+from wtforms.validators import DataRequired, Email, NumberRange, ValidationError, Length, Optional
 from wtforms_components import TimeField, DateRange
 from wtforms.widgets import Input
 from clubsapp.models import Club
@@ -101,16 +101,18 @@ class MotionForms(FlaskForm):
 	secondby = StringField('Seconded By',
 		render_kw={"placeholder":"Name"})
 	numfor = IntegerField('Number For',
+		validators=[Optional()],
 		render_kw={"placeholder":"#"})
 	numagainst = IntegerField('Number Against',
+		validators=[Optional()],
 		render_kw={"placeholder":"#"})
 
 def create_club_minutes_form(club):
 	num_members = len(club.members)
 	class ClubMinutesForm(FlaskForm):
-		date = DateField('Meeting Date (dd/mm/year)',
+		date = DateField('Meeting Date (mm/dd/year)',
 			validators=[DataRequired(), DateRange(max = date.today())],
-			format = '%d/%m/%Y')
+			format = '%m/%d/%Y')
 		time = TimeField('Meeting Called to Order at')
 		location = StringField('Meeting Place',
 			validators=[DataRequired()],
@@ -126,7 +128,7 @@ def create_club_minutes_form(club):
 			min_entries=5, 
 			max_entries=5)
 		notes = TextAreaField('Overview of Meeting', 
-			validators=[DataRequired(), Length(min=10, max=400)])
+			validators=[DataRequired(), Length(min=10, max=500)])
 		submit = SubmitField('Submit')
 		
 	return ClubMinutesForm()

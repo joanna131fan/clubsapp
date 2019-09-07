@@ -13,7 +13,7 @@
                         {{ form.date(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                         {% for error in form.date.errors %}
-                        <span>{{ error }}</span>
+                        <span> Please Pick A Valid Date </span>
                     {% endfor %}
                         </div>
                     {% else %}

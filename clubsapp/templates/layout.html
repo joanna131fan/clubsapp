@@ -30,7 +30,6 @@
         <div class="navbar-nav">
           <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
           <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
-          <a class="nav-item nav-link" href="{{ url_for('clubs.view') }}">View Minutes</a>
         </div>
         <!-- Navbar Right Side: CHANGE TO FORCE LOGIN LATER -->
         <div class="navbar-nav">
@@ -38,6 +37,7 @@
             <a class="nav-item nav-link" href="{{ url_for('clubs.user_clubs', user_id=current_user.id) }}">My Clubs</a>
             <a class="nav-item nav-link" href="{{ url_for('clubs.num_club_members', user_id=current_user.id) }}">Club Members</a>
             <a class="nav-item nav-link" href="{{ url_for('clubs.record_club_name', user_id=current_user.id) }}">Record Minutes</a>
+            <a class="nav-item nav-link" href="{{ url_for('clubs.view_club_name', user_id=current_user.id) }}">View Minutes</a>
             <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Log Out</a>
           {% else %}
             <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
