@@ -19,31 +19,34 @@
             {{ form.club_name(class="form-control form-control-lg") }}
           {% endif %}
         </div>
-        <div class="form-group">
-          {{ form.advisor.label(class="form-control-label") }}
-          {% if form.advisor.errors %}
-            {{ form.advisor(class="form-control form-control-lg is-invalid") }}
-            <div class="invalid-feedback">
-              {% for error in form.advisor.errors %}
-                <span>{{ error }}</span>
-              {% endfor %}
-            </div>
-          {% else %}
-            {{ form.advisor(class="form-control form-control-lg") }}
-          {% endif %}
-        </div>
-        <div class="form-group">
-          {{ form.email.label(class="form-control- label") }}
-          {% if form.email.errors %}
-            {{ form.email(class="form-control form-control-lg is-invalid") }}
-            <div class="invalid-feedback">
-              {% for error in form.email.errors %}
-                <span>{{ error }}</span>
-              {% endfor %}
-            </div>
-          {% else %}
-            {{ form.email(class="form-control form-control-lg") }}
-          {% endif %}
+        <div class = "row">
+          <div class="form-group col-md-6">
+            {{ form.advisor.label(class="form-control-label") }}
+            {% if form.advisor.errors %}
+              {{ form.advisor(class="form-control form-control-lg is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.advisor.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.advisor(class="form-control form-control-lg") }}
+            {% endif %}
+          </div>
+        
+          <div class="form-group col-md-6">
+            {{ form.email.label(class="form-control- label") }}
+            {% if form.email.errors %}
+              {{ form.email(class="form-control form-control-lg is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.email(class="form-control form-control-lg") }}
+            {% endif %}
+          </div>
         </div>
       </fieldset>
       <div class="form-group">
@@ -51,12 +54,27 @@
       </div>
     </form>
   </div>
-{% endblock content %}
-{% block side_content %}
+<br>
+
+<label> Current Clubs </label>
+<table class = "table table-bordered table-striped mb-0">
+  <tr>
+    <th>Club</th>
+    <th>Members</th>
+  </tr>
+
   <div class="content-section">
     {% for club in clubs %}
-      <p>Club Name: {{ club.name }}</p>
-      <p>Members: {{ club.members }}</p>
+    <tr>
+      <td>{{ club.name }}</td>
+      <td>{% for member in club.members%}
+            {{ member.firstname }} 
+            {{ member.lastname }}
+            <br>
+          {% endfor %}
+      </td>
+    </tr>
     {% endfor %}
   </div>
-{% endblock side_content %}
+</table>
+{% endblock content %}

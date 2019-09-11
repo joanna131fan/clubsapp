@@ -13,7 +13,6 @@ user_club_assoc_table = db.Table('user_club_assoc_table',
 roles = db.relationship('Role', secondary='user_roles',
                 backref=db.backref('users', lazy='dynamic'))
 
-
 @login_manager.user_loader
 def load_user(user_id):
 	return User.query.get(int(user_id))
@@ -29,7 +28,7 @@ class User(db.Model, UserMixin):
 	clubs = db.relationship('Club', secondary=user_club_assoc_table)
 	
 	def __repr__(self):
-		return f'User(firstname={self.firstname!r}, lastname={self.lastname!r})'
+		return f'{self.firstname} {self.lastname}' #return f'User(firstname={self.firstname!r}, lastname={self.lastname!r})'
 
 
 class Club(db.Model):
@@ -40,6 +39,17 @@ class Club(db.Model):
 	def __repr__(self):
 		return f'Club(name={self.name!r})'
 
+class Minutes(db.Model): 
+	id = db.Column(db.Integer, primary_key=True)
+	club = db.Column(db.String(100), nullable=False)
+	date = db.Column(db.Date, nullable=False) #0000-00-00
+	time = db.Column(db.Time, nullable=False) #00:00:00
+	location = db.Column(db.String(100), nullable=False)
+	attendance = db.Column(db.Text, nullable=False) #check code
+	purchase =  db.Column(db.Text)
+	purchasemotion = db.Column(db.Text)
+	fundraiser = db.Column(db.Text)
+	fundmotion = db.Column(db.Text)
+	minute = db.Column(db.Text, nullable=False) #notes
 
-# class Minutes(db.Model): 
-# 	id = db.Column(db.Integer, primary_key=True)
+	

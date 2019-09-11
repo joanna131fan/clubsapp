@@ -6,25 +6,228 @@
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4"> Record </legend>
-            <div class="form-group">
-                {{ form.club_list.label(class="form-control-label")}}
-                {{ form.club_list(class="form-control form control-lg")}}
+            <div class = "row">
+                <div class="form-group col-md-6">
+                    {{ form.date.label(class="form-control- label") }}
+                    {% if form.date.errors %}
+                        {{ form.date(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                        {% for error in form.date.errors %}
+                        <span> Please Pick A Valid Date </span>
+                    {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.date(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group col-md-6">
+                    {{ form.location.label(class="form-control- label") }}
+                    {% if form.location.errors %}
+                        {{ form.location(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                        {% for error in form.location.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.location(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
             </div>
-            <table class="table-group">
+            <label> Attendance </label>
+            <div class="form-group table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-bordered table-striped mb-0"> <!-- class="table"-->
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Is here?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for attend in form.attendance %}
+                        {% set i = loop.index - 1 %}
+                        <tr>
+                            <td>{{ members[i].firstname }} {{ members[i].lastname }}</td>
+                            <td>
+                                {% if attend.errors %}
+                                    {{ attend(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in attend.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ attend(class="form-control form-control-lg") }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                {{ form.notes.label(class="form-control- label") }}
+                {% if form.notes.errors %}
+                    {{ form.notes(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                    {% for error in form.notes.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.notes(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+            <label> Purchase Orders </label>
+            <table class="table table-bordered table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th scope = "col" width = "40px"> Payable To </th>
+                        <th scope = "col" width = "15px"> Amount </th>
+                        <th scope = "col" width = "100px"> Purpose of Expenditure </th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr>
-                        <th><strong>Member</strong></th>
-                        <th><strong>Is Here?</strong></th>
-                    </tr>
-                    <!-- start fixing HERE -->
-                    {% for member in form.members %}
-                    <tr>
-                        <td>{{ form.members(value=form.members.firstname, form.members.lastname)}}</td>
-                        <td>{{ form.is_here(class="form-control form control-lg")}}</td>
-                    </tr>
+                    {% for thing in form.purchaseform %}
+                        <tr>
+                            <td> {{ thing.payable_to(class="form-control form-control-lg")}} </td>
+                            <td> {{ thing.amount(class="form-control form-control-lg")}}</td>
+                            <td> {{ thing.expenditure(class="form-control form-control-lg")}}</td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            <div class = "row">
+                <div class="form-group col-md-3">
+                    {{ form.purchasevote.motionedby.label(class="form-control- label") }}
+                    {% if form.purchasevote.motionedby.errors %}
+                        {{ form.purchasevote.motionedby(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                        {% for error in form.purchasevote.motionedby.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.purchasevote.motionedby(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group col-md-3">
+                    {{ form.purchasevote.secondby.label(class="form-control- label") }}
+                    {% if form.purchasevote.secondby.errors %}
+                        {{ form.purchasevote.secondby(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                        {% for error in form.purchasevote.secondby.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.purchasevote.secondby(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group col-md-3">
+                    {{ form.purchasevote.numfor.label(class="form-control- label") }}
+                    {% if form.purchasevote.numfor.errors %}
+                        {{ form.purchasevote.numfor(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                        {% for error in form.purchasevote.numfor.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.purchasevote.numfor(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group col-md-3">
+                    {{ form.purchasevote.numagainst.label(class="form-control- label") }}
+                    {% if form.purchasevote.numagainst.errors %}
+                        {{ form.purchasevote.numagainst(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                        {% for error in form.purchasevote.numagainst.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.purchasevote.numagainst(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </div>
+            </div>
+            <div class = "form-group">
+                <label> Fundraisers </label>
+                <table class="table table-bordered table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th scope = "col" width = "40px"> Fundraiser Description </th>
+                            <th scope = "col" width = "15px"> Proposed Date of Event </th>
+                            <th scope = "col" width = "100px"> Purpose of Expenditure </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for formfield in form.fundform %}
+                            <tr>
+                                <td> {{ formfield.descript(class="form-control form-control-lg")}} </td>
+                                <td> {{ formfield.proposeddate(class="form-control form-control-lg")}}</td>
+                                <td> {{ formfield.expenditure(class="form-control form-control-lg")}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class = "row">
+                    <div class="form-group col-md-3">
+                        {{ form.purchasevote.motionedby.label(class="form-control- label") }}
+                        {% if form.purchasevote.motionedby.errors %}
+                            {{ form.purchasevote.motionedby(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                            {% for error in form.purchasevote.motionedby.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.purchasevote.motionedby(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-md-3">
+                        {{ form.purchasevote.secondby.label(class="form-control- label") }}
+                        {% if form.purchasevote.secondby.errors %}
+                            {{ form.purchasevote.secondby(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                            {% for error in form.purchasevote.secondby.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.purchasevote.secondby(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-md-3">
+                        {{ form.purchasevote.numfor.label(class="form-control- label") }}
+                        {% if form.purchasevote.numfor.errors %}
+                            {{ form.purchasevote.numfor(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                            {% for error in form.purchasevote.numfor.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.purchasevote.numfor(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-md-3">
+                        {{ form.purchasevote.numagainst.label(class="form-control- label") }}
+                        {% if form.purchasevote.numagainst.errors %}
+                            {{ form.purchasevote.numagainst(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                            {% for error in form.purchasevote.numagainst.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.purchasevote.numagainst(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </fieldset>
         <div class="form-group">
             {{ form.submit(class="btn btn-outline-info")}}

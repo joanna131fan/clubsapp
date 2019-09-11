@@ -50,6 +50,7 @@ body {
     padding: 0 20px 20px 20px;
     border: 5px solid #c7e4f1;
 }
+
 img {
     display: block;
     margin: 0 auto;
@@ -73,7 +74,7 @@ form{
     color: white;
     background-color: rgba(186, 208, 240, 0.705) !important;
     border: 1px solid rgba(162, 185, 228, 0.753);
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .form-group {
@@ -84,6 +85,7 @@ form{
     color: #CCC;
     opacity: 1;
     font-family: 'Source Sans Pro', sans-serif;
+    font-size: 18px;
 }
 
 li {
@@ -93,23 +95,34 @@ li {
 }
 
 
-
 /*table*/
 table {
-    border-collapse: collapse;
-    border: 2px solid rgb(200,200,200);
+    border-radius: 5px;
+    color: rgb(26, 4, 4) !important;
     letter-spacing: 1px;
     font-size: 0.8rem;
-    float: center;
+    text-align: inherit;
+    width: 400px;
   }
   
-  td, th {
-    border: 1px solid rgb(190,190,190);
-    padding: 10px 20px;
+  table, td, th {
+    padding: 2px !important;
+    border: 1px solid rgb(3, 0, 0);
+    border-top: 1px solid rgb(3, 0, 0);
+    vertical-align: middle !important;
+    text-align: center;
   }
-  
+  .my-custom-scrollbar {
+    position: relative;
+    height: 300px;
+    overflow: auto;
+    }
+  .table-wrapper-scroll-y {
+    display: block;
+  }
+
   th {
-    background-color: rgb(235,235,235);
+    color: rgb(26, 4, 4);
   }
   
   td {
