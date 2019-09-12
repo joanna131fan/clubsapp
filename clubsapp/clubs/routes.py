@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, url_for, redirect, request, flash
 from flask_login import current_user, login_required
 from clubsapp import db
 from clubsapp.utils import ROLES
-from clubsapp.models import Club, User, Minutes
+from clubsapp.models import Club, User, Minutes, Attendance
 from clubsapp.clubs.forms import ClubRegistrationForm, NumMembersToAddForm, create_member_entry_form, create_club_minutes_form, record_club_name_form
 
 
@@ -91,33 +91,16 @@ def record_club_minutes(user_id, club_id):
 	members = club.members
 	form = create_club_minutes_form(club)
 	if form.validate_on_submit():
-		#new_minute = Minutes(club=club, date=form.date, time=form.time, location=form.location, minute=form.notes)
-		minute = Minutes()
-		new_min_form = request.form
-		append_changes(minute, new_min_form, new=True)
-		flash('Minutes successfully recorded', 'success')
-		return redirect(url_for('clubs.view_club_name', user_id=user_id))
+			minute = Minutes(club_id=club_id, date=form.date.data, time=form.time.data, location=form.location.data, minute=form.notes.data)
+			db.session.add(minute)
+			for index, field in enumerate(form.attendance):
+				if field:
+					attendance = Attendance(student_name=members[index].firstname + members[index].lastname)
+					minute.attendance.append(attendance)	
+			db.session.commit()
+			flash('Minutes successfully recorded', 'success')
+			return redirect(url_for('clubs.view_club_name', user_id=user.id))
 	return render_template('record_minutes.html', title='Record', form=form, user=user, members=members)
-
-def append_changes(minute, form, new=False):
-	# Save the changes to the database
-	# Get data from form and assign it to the correct attributes
-	# of the SQLAlchemy table object
-	club = Club()
-	club.name = form.name.data
-
-	minute.club = club
-	minute.date = form.date.data
-	minute.time = form.time.data
-	minute.location = form.location.data
-	minute.minute = form.minute.data
-	for index, field in form.attendance:
-			if field:
-				minute.attendance.append(club.members[index])
-	if new:
-		db.session.add(minute)
-
-	db.session.commit()
 
 #DEBUG
 @clubs.route("/view_minutes/<int:user_id>", methods=['GET', 'POST'])

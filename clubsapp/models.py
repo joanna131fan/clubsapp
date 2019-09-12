@@ -35,21 +35,26 @@ class Club(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(100), unique=True, nullable=False)
 	members = db.relationship('User', secondary=user_club_assoc_table)
-
+	minutes = db.relationship('Minutes', backref='club')
 	def __repr__(self):
 		return f'Club(name={self.name!r})'
 
 class Minutes(db.Model): 
 	id = db.Column(db.Integer, primary_key=True)
-	club = db.Column(db.String(100), nullable=False)
+	club_id = db.Column(db.Integer, db.ForeignKey('club.id'))
 	date = db.Column(db.Date, nullable=False) #0000-00-00
-	time = db.Column(db.Time, nullable=False) #00:00:00
+	time = db.Column(db.Time) #00:00:00
 	location = db.Column(db.String(100), nullable=False)
-	attendance = db.Column(db.Text, nullable=False) #check code
+	attendance = db.relationship('Attendance', backref='minutes', lazy=True) #check code
 	purchase =  db.Column(db.Text)
 	purchasemotion = db.Column(db.Text)
 	fundraiser = db.Column(db.Text)
 	fundmotion = db.Column(db.Text)
 	minute = db.Column(db.Text, nullable=False) #notes
+	def __repr__(self):
+		return f'{self.club_id} {self.date}'
 
-	
+class Attendance(db.Model):
+	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+	student_name = db.Column(db.String(35), nullable=False)
+	minutes_id = db.Column(db.Integer, db.ForeignKey('minutes.id'))

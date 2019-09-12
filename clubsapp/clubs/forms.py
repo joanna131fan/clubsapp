@@ -88,17 +88,21 @@ class PurchaseOrderForms(FlaskForm):
 		render_kw={"placeholder":"Expenditure"})
 
 class FundraiserForms(FlaskForm):
-	descript = StringField('Fundraiser Description')
+	descript = StringField('Fundraiser Description',
+		validators=[Optional()])
 	proposeddate = DateField('Proposed Date (dd/mm/year)',
-			validators=[DateRange(min = date.today())],
+			validators=[Optional()],
 			format = '%d/%m/%Y')
 	expenditure = StringField('Purpose of Expenditure',
+		validators=[Optional()],
 		render_kw={"placeholder":"Expenditure"})
 
 class MotionForms(FlaskForm):
 	motionedby = StringField('Motioned By',
-		render_kw={"placeholder":"Name"})
+	    validators=[Optional()],
+        render_kw={"placeholder":"Name"})
 	secondby = StringField('Seconded By',
+		validators=[Optional()],
 		render_kw={"placeholder":"Name"})
 	numfor = IntegerField('Number For',
 		validators=[Optional()],
@@ -127,6 +131,7 @@ def create_club_minutes_form(club):
 		fundform = FieldList(FormField(FundraiserForms), 
 			min_entries=5, 
 			max_entries=5)
+		fundvote = FormField(MotionForms)
 		notes = TextAreaField('Overview of Meeting', 
 			validators=[DataRequired(), Length(min=10, max=500)])
 		submit = SubmitField('Submit')

@@ -175,55 +175,55 @@
                 </table>
                 <div class = "row">
                     <div class="form-group col-md-3">
-                        {{ form.purchasevote.motionedby.label(class="form-control- label") }}
-                        {% if form.purchasevote.motionedby.errors %}
-                            {{ form.purchasevote.motionedby(class="form-control form-control-lg is-invalid") }}
+                        {{ form.fundvote.motionedby.label(class="form-control- label") }}
+                        {% if form.fundvote.motionedby.errors %}
+                            {{ form.fundvote.motionedby(class="form-control form-control-lg is-invalid") }}
                             <div class="invalid-feedback">
-                            {% for error in form.purchasevote.motionedby.errors %}
+                            {% for error in form.fundvote.motionedby.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                             </div>
                         {% else %}
-                            {{ form.purchasevote.motionedby(class="form-control form-control-lg") }}
+                            {{ form.fundvote.motionedby(class="form-control form-control-lg") }}
                         {% endif %}
                     </div>
                     <div class="form-group col-md-3">
-                        {{ form.purchasevote.secondby.label(class="form-control- label") }}
-                        {% if form.purchasevote.secondby.errors %}
-                            {{ form.purchasevote.secondby(class="form-control form-control-lg is-invalid") }}
+                        {{ form.fundvote.secondby.label(class="form-control- label") }}
+                        {% if form.fundvote.secondby.errors %}
+                            {{ form.fundvote.secondby(class="form-control form-control-lg is-invalid") }}
                             <div class="invalid-feedback">
-                            {% for error in form.purchasevote.secondby.errors %}
+                            {% for error in form.fundvote.secondby.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                             </div>
                         {% else %}
-                            {{ form.purchasevote.secondby(class="form-control form-control-lg") }}
+                            {{ form.fundvote.secondby(class="form-control form-control-lg") }}
                         {% endif %}
                     </div>
                     <div class="form-group col-md-3">
-                        {{ form.purchasevote.numfor.label(class="form-control- label") }}
-                        {% if form.purchasevote.numfor.errors %}
-                            {{ form.purchasevote.numfor(class="form-control form-control-lg is-invalid") }}
+                        {{ form.fundvote.numfor.label(class="form-control- label") }}
+                        {% if form.fundvote.numfor.errors %}
+                            {{ form.fundvote.numfor(class="form-control form-control-lg is-invalid") }}
                             <div class="invalid-feedback">
-                            {% for error in form.purchasevote.numfor.errors %}
+                            {% for error in form.fundvote.numfor.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                             </div>
                         {% else %}
-                            {{ form.purchasevote.numfor(class="form-control form-control-lg") }}
+                            {{ form.fundvote.numfor(class="form-control form-control-lg") }}
                         {% endif %}
                     </div>
                     <div class="form-group col-md-3">
-                        {{ form.purchasevote.numagainst.label(class="form-control- label") }}
-                        {% if form.purchasevote.numagainst.errors %}
-                            {{ form.purchasevote.numagainst(class="form-control form-control-lg is-invalid") }}
+                        {{ form.fundvote.numagainst.label(class="form-control- label") }}
+                        {% if form.fundvote.numagainst.errors %}
+                            {{ form.fundvote.numagainst(class="form-control form-control-lg is-invalid") }}
                             <div class="invalid-feedback">
-                            {% for error in form.purchasevote.numagainst.errors %}
+                            {% for error in form.fundvote.numagainst.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                             </div>
                         {% else %}
-                            {{ form.purchasevote.numagainst(class="form-control form-control-lg") }}
+                            {{ form.fundvote.numagainst(class="form-control form-control-lg") }}
                         {% endif %}
                     </div>
                 </div>
