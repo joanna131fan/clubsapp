@@ -37,7 +37,7 @@ class Club(db.Model):
 	members = db.relationship('User', secondary=user_club_assoc_table)
 	minutes = db.relationship('Minutes', backref='club')
 	def __repr__(self):
-		return f'Club(name={self.name!r})'
+		return f'{self.name}'#Club(name={self.name!r})
 
 class Minutes(db.Model): 
 	id = db.Column(db.Integer, primary_key=True)
@@ -57,4 +57,5 @@ class Minutes(db.Model):
 class Attendance(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	student_name = db.Column(db.String(35), nullable=False)
+	present = db.Column(db.Boolean, default=False) #set correctly
 	minutes_id = db.Column(db.Integer, db.ForeignKey('minutes.id'))

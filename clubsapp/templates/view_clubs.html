@@ -4,10 +4,19 @@
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4"> Record </legend>
+            <legend class="border-bottom mb-4"> View </legend>
             <div class="form-group">
                 {{ form.club_list.label(class="form-control-label")}}
-                {{ form.club_list(class="form-control form control-lg")}}
+                {% if form.club_list.errors %}
+                        {{ form.club_list(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                        {% for error in form.club_list.errors %}
+                        <span> Please Pick A Valid Club </span>
+                    {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.club_list(class="form-control form-control-lg") }}
+                    {% endif %}
             </div>
         </fieldset>
         <div class="form-group">

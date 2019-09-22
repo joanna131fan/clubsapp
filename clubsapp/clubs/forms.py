@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField, FieldList, BooleanField, FormField, DateField, TextAreaField, DecimalField
+from wtforms import StringField, SubmitField, IntegerField, FieldList, BooleanField, FormField, DateField, TextAreaField, DecimalField, SelectField
 from wtforms.validators import DataRequired, Email, NumberRange, ValidationError, Length, Optional
 from wtforms_components import TimeField, DateRange
 from wtforms.widgets import Input
@@ -76,6 +76,12 @@ def record_club_name_form(user):
 			query_factory=user_club_query,
 			allow_blank=True,
 			get_label='name')
+		purchaseitems = SelectField('How many purchases are you making?',
+			validators=[DataRequired()],
+			choices=[('0', 0), ('1', 1), ('2', 2), ('3', 3), ('4', 4), ('5', 5)])
+		funditems = SelectField('How many fundraisers are you planning?',
+			validators=[DataRequired()], 
+			choices=[('0', 0), ('1', 1), ('2', 2), ('3', 3), ('4', 4), ('5', 5)])
 		submit = SubmitField('Submit')
 		
 	return ClubNameMinutesForm()
@@ -111,7 +117,7 @@ class MotionForms(FlaskForm):
 		validators=[Optional()],
 		render_kw={"placeholder":"#"})
 
-def create_club_minutes_form(club):
+def create_club_minutes_form(club, purchase, fund):
 	num_members = len(club.members)
 	class ClubMinutesForm(FlaskForm):
 		date = DateField('Meeting Date (mm/dd/year)',
@@ -125,12 +131,12 @@ def create_club_minutes_form(club):
 			min_entries=num_members,
 			max_entries=num_members)
 		purchaseform = FieldList(FormField(PurchaseOrderForms), 
-			min_entries=5, 
-			max_entries=5)
+			min_entries=purchase, 
+			max_entries=purchase)
 		purchasevote = FormField(MotionForms)
 		fundform = FieldList(FormField(FundraiserForms), 
-			min_entries=5, 
-			max_entries=5)
+			min_entries=fund, 
+			max_entries=fund)
 		fundvote = FormField(MotionForms)
 		notes = TextAreaField('Overview of Meeting', 
 			validators=[DataRequired(), Length(min=10, max=500)])
@@ -138,4 +144,17 @@ def create_club_minutes_form(club):
 		
 	return ClubMinutesForm()
 
-
+def view_club_name_form(user):
+	def user_club_query():
+		return user.clubs
+	
+	class ClubNameMinutesForm(FlaskForm):
+		club_list = QuerySelectField(
+			'Club Name',
+			validators=[DataRequired()],
+			query_factory=user_club_query,
+			allow_blank=True,
+			get_label='name')
+		submit = SubmitField('Submit')
+		
+	return ClubNameMinutesForm()

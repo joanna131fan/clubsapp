@@ -8,7 +8,42 @@
             <legend class="border-bottom mb-4"> Record </legend>
             <div class="form-group">
                 {{ form.club_list.label(class="form-control-label")}}
-                {{ form.club_list(class="form-control form control-lg")}}
+                {% if form.club_list.errors %}
+                        {{ form.club_list(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                        {% for error in form.club_list.errors %}
+                        <span> Please Pick A Valid Club </span>
+                    {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.club_list(class="form-control form-control-lg") }}
+                    {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.purchaseitems.label(class="form-control-label")}}
+                {% if form.purchaseitems.errors %}
+                        {{ form.purchaseitems(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                        {% for error in form.purchaseitems.errors %}
+                        <span> {{ error }} </span>
+                    {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.purchaseitems(class="form-control form-control-lg") }}
+                    {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.funditems.label(class="form-control-label")}}
+                {% if form.funditems.errors %}
+                        {{ form.funditems(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                        {% for error in form.funditems.errors %}
+                        <span> {{ error }} </span>
+                    {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.funditems(class="form-control form-control-lg") }}
+                    {% endif %}
             </div>
         </fieldset>
         <div class="form-group">

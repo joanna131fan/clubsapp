@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from clubsapp import db
 from clubsapp.utils import ROLES
 from clubsapp.models import Club, User, Minutes, Attendance
-from clubsapp.clubs.forms import ClubRegistrationForm, NumMembersToAddForm, create_member_entry_form, create_club_minutes_form, record_club_name_form
+from clubsapp.clubs.forms import ClubRegistrationForm, NumMembersToAddForm, create_member_entry_form, create_club_minutes_form, record_club_name_form, view_club_name_form
 
 
 clubs = Blueprint('clubs', __name__)
@@ -72,43 +72,46 @@ def add_club_members(user_id, num_members):
 
 @clubs.route("/record_minutes/<int:user_id>", methods=['GET', 'POST'])
 @login_required
-def record_club_name(user_id):
+def generate_minutes(user_id):
 	user = User.query.get_or_404(user_id)
 	# TODO: use the same form
 	form = record_club_name_form(user)
 	if form.validate_on_submit():
 		# send user to the record_club_minutes
-        	club = form.club_list.data
-        	return redirect(url_for('clubs.record_club_minutes', user_id=user_id, club_id=club.id))
+            club = form.club_list.data
+            purchitems = int(form.purchaseitems.data)
+            funditems = int(form.funditems.data)
+            return redirect(url_for('clubs.record_club_minutes', user_id=user_id, club_id=club.id, purchase=purchitems, fund=funditems))
 	return render_template('record_club_name.html', title='Record', form=form, user=user)
 
-#THERE MAY BE BUGS HERE // FIX: redirect/submission not working
-@clubs.route("/record_minutes/<int:user_id>/<int:club_id>/record", methods=['GET', 'POST'])
+#THERE MAY BE BUGS HERE 
+@clubs.route("/record_minutes/<int:user_id>/<int:club_id>/<int:purchase>/<int:fund>/record", methods=['GET', 'POST'])
 @login_required
-def record_club_minutes(user_id, club_id):
+def record_club_minutes(user_id, club_id, purchase, fund):
 	user = User.query.get_or_404(user_id)
 	club = Club.query.get_or_404(club_id)
 	members = club.members
-	form = create_club_minutes_form(club)
+	form = create_club_minutes_form(club, purchase, fund)
+	# form.purchaseform.entries = purchase
+	# form.fundform.entries = fund
 	if form.validate_on_submit():
-			minute = Minutes(club_id=club_id, date=form.date.data, time=form.time.data, location=form.location.data, minute=form.notes.data)
-			db.session.add(minute)
-			for index, field in enumerate(form.attendance):
-				if field:
-					attendance = Attendance(student_name=members[index].firstname + members[index].lastname)
-					minute.attendance.append(attendance)	
-			db.session.commit()
-			flash('Minutes successfully recorded', 'success')
-			return redirect(url_for('clubs.view_club_name', user_id=user.id))
-	return render_template('record_minutes.html', title='Record', form=form, user=user, members=members)
+            minute = Minutes(club_id=club_id, date=form.date.data, time=form.time.data, location=form.location.data, minute=form.notes.data)
+            db.session.add(minute)
+            for index, field in enumerate(form.attendance):
+                if field: #BUG isn't recording only the people present
+                    attendance = Attendance(student_name=members[index].firstname + members[index].lastname)
+                    minute.attendance.append(attendance)	
+            db.session.commit()
+            flash('Minutes successfully recorded', 'success')
+            return redirect(url_for('clubs.view_club_name', user_id=user.id))
+	return render_template('record_minutes.html', title='Record', form=form, user=user, club=club, members=members)
 
-#DEBUG
 @clubs.route("/view_minutes/<int:user_id>", methods=['GET', 'POST'])
 @login_required
 def view_club_name(user_id):
 	user = User.query.get_or_404(user_id)
 	# TODO: use the same form
-	form = record_club_name_form(user)
+	form = view_club_name_form(user)
 	if form.validate_on_submit():
 		# send user to the record_club_minutes
         	club = form.club_list.data
@@ -118,4 +121,7 @@ def view_club_name(user_id):
 @clubs.route("/view_minutes/<int:user_id>/<int:club_id>", methods=['GET', 'POST'])
 @login_required
 def view_minutes(user_id, club_id):
-	return render_template('view_minutes.html', title='View')
+	club = Club.query.get_or_404(club_id)
+	user = User.query.get_or_404(user_id)
+	minutes = club.minutes
+	return render_template('view_minutes.html', title='View', user=user, club=club, minutes=minutes)

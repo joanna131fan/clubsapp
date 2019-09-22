@@ -1,7 +1,26 @@
 {%extends "layout.html"%}
 {%block content%}
 <div class = "content-section">
-    <h1>Record Page</h1>
+    <h1>View Page</h1>
+</div>
+<div class="form-group table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-striped mb-0"> <!-- class="table"-->
+        <thead>
+            <tr>
+                <th scope="col">Club</th>
+                <th scope="col">Date of Meeting</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for list in minutes %}
+                {% set i = loop.index - 1 %}
+                <tr>
+                    <td>{{ club }}</td>
+                    <td>{{ minutes[i].date }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 {%endblock%}
