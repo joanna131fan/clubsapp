@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    {% if title %}
+    <title>ClubsApp - {{ title }}</title>
+    {% else %}
+    <title>ClubsApp</title>
+    {% endif %}
+</head>
+<body>
+<br>
+<div class="row" id="pdf">
+    <div class="col-md-1">
+
+    </div>
+    <div class="col-md-10">
+        <table class="table table-bordered table-striped mb-0"> 
+            <tbody>
+                <tr>
+                    <th scope="col" colspan="2">Club: {{ club }} </th>
+                    <th scope="col">Meeting Date: {{ minutes.date }}</th>
+                    <th scope="col"> Time: </th> <!--FIX TIME-->
+                    <th scope="col">Location: {{minutes.location}}</th>
+                </tr>
+                <tr>
+                    <th scope="col" colspan="5"> Attendance: 
+                        {% for person in minutes.attendance %}
+                            {% set i = loop.index-1 %}
+                            {% if person.present==true %}
+                                {{ person }} &nbsp; &nbsp;&nbsp;
+                            {% endif %}
+                        {% endfor %}
+                    </th> <!--FIX ATTENDANCE-->
+                </tr>
+                <tr>
+                    <th scope="col" colspan="5"> Meeting Summary: {{minutes.minute}}</th> 
+                </tr>
+                <!--ADD PURCHASE AND FUND-->
+                <tr>
+                    <th scope="col" colspan="5">Minutes Respectfully Submitted by: {{user.firstname}} {{user.lastname}}</th>
+                </tr>
+                <tr>
+                    <th scope="col" colspan="1">Advisor Signature: </th>
+                    <th scope="col" colspan="2">Board Member Signature: </th>
+                    <th scope="col" colspan="2">Board Member Signature: </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+<style>
+#pdf {
+  font-family: 'Source Sans Pro', sans-serif!important; 
+  font-size: 20px;
+}
+</style>

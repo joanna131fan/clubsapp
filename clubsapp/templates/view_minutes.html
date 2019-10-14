@@ -3,12 +3,18 @@
 <div class = "content-section">
     <h1>View Page</h1>
 </div>
-<div class="form-group table-wrapper-scroll-y my-custom-scrollbar">
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for minutes by date">
+<br>
+<br>
+
+<div class="form-group table-wrapper-scroll-y my-custom-scrollbar" id="myTable">
     <table class="table table-bordered table-striped mb-0"> <!-- class="table"-->
         <thead>
             <tr>
                 <th scope="col">Club</th>
                 <th scope="col">Date of Meeting</th>
+                <th scope="col">Summary</th>
+                <th scope="col">Export</th>
             </tr>
         </thead>
         <tbody>
@@ -17,6 +23,8 @@
                 <tr>
                     <td>{{ club }}</td>
                     <td>{{ minutes[i].date }}</td>
+                    <td>{{ minutes[i].minute }}</td>
+                    <td><a href="{{ url_for('clubs.minutes_pdf', club_id=club.id, user_id=user.id, minutes_id=minutes[i].id) }}">Get as PDF</a></td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -24,3 +32,4 @@
 </div>
 
 {%endblock%}
+

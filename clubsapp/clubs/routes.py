@@ -1,10 +1,11 @@
+import pandas as pd
 from flask import Blueprint, render_template, url_for, redirect, request, flash
 from flask_login import current_user, login_required
 from clubsapp import db
 from clubsapp.utils import ROLES
-from clubsapp.models import Club, User, Minutes, Attendance
+from clubsapp.models import Club, User, Minutes, Attendance, Post
 from clubsapp.clubs.forms import ClubRegistrationForm, NumMembersToAddForm, create_member_entry_form, create_club_minutes_form, record_club_name_form, view_club_name_form
-
+import xlrd
 
 clubs = Blueprint('clubs', __name__)
 
@@ -98,9 +99,8 @@ def record_club_minutes(user_id, club_id, purchase, fund):
             minute = Minutes(club_id=club_id, date=form.date.data, time=form.time.data, location=form.location.data, minute=form.notes.data)
             db.session.add(minute)
             for index, field in enumerate(form.attendance):
-                if field: #BUG isn't recording only the people present
-                    attendance = Attendance(student_name=members[index].firstname + members[index].lastname)
-                    minute.attendance.append(attendance)	
+                attendance = Attendance(student_name=members[index].firstname + ' ' + members[index].lastname, present=form.attendance[index].data, minutes_id=minute.id)
+                minute.attendance.append(attendance)	
             db.session.commit()
             flash('Minutes successfully recorded', 'success')
             return redirect(url_for('clubs.view_club_name', user_id=user.id))
@@ -124,4 +124,51 @@ def view_minutes(user_id, club_id):
 	club = Club.query.get_or_404(club_id)
 	user = User.query.get_or_404(user_id)
 	minutes = club.minutes
+	#if click "export" -->
+		#return render_pdf(url_for('minutes_pdf', user_id=user_id, club_id=club_id))
 	return render_template('view_minutes.html', title='View', user=user, club=club, minutes=minutes)
+
+@clubs.route("/minutes_pdf/<int:user_id>/<int:club_id>/<int:minutes_id>.pdf", methods=['GET', 'POST'])
+@login_required
+def minutes_pdf(user_id, club_id, minutes_id):
+	club = Club.query.get_or_404(club_id)
+	user = User.query.get_or_404(user_id)
+	minutes = Minutes.query.get_or_404(minutes_id) #GET THE Minutes for specific DAY
+	return render_template('view_minutes_pdf.html', club=club, user=user, minutes=minutes)
+
+@clubs.route("/schoolclubs", methods=['GET', 'POST'])
+@login_required
+def school_clubs():
+    workbook = xlrd.open_workbook("/Users/joannafan/Desktop/clubsproject/clubsapp/clubs/portolaclubs.xlsx")
+    worksheet = workbook.sheet_by_index(0)
+    first_row=[]
+    for col in range(worksheet.ncols):
+        first_row.append(worksheet.cell_value(0,col))
+    data = []
+    for row in range(1, worksheet.nrows):
+        record = {}
+        for col in range(worksheet.ncols):
+            if isinstance(worksheet.cell_value(row,col), str):
+                if col==0:
+                	club = worksheet.cell_value(row,col).strip()
+                if col==1:
+                    advisor = worksheet.cell_value(row,col).strip()
+                if col==2:
+                    room = worksheet.cell_value(row,col).strip()
+            else:
+                if col==0:
+                	club = worksheet.cell_value(row,col).strip()
+                if col==1:
+                    advisor = worksheet.cell_value(row,col).strip()
+                if col==2:
+                    room = worksheet.cell_value(row,col).strip()
+        post=Post(club=club, advisor=advisor, room=room)
+        data.append(post)
+    return render_template('schoolclubs.html', data=data)
+
+# @clubs.route("/schoolclubs", methods=['GET', 'POST'])
+# @login_required
+# def school_clubs():
+# 	df = pd.read_excel("/Users/joannafan/Desktop/clubsproject/clubsapp/clubs/portolaclubs.xlsx")
+# 	# return render_template('schoolclubs.html', df=df)
+# 	return df.to_html()

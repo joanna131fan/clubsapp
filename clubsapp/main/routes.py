@@ -9,7 +9,10 @@ main = Blueprint('main', __name__)
 @main.route("/home")
 @login_required
 def home():
-	return render_template('home.html', title='Home')
+	news = ['Interclub Council Meeting 10/20', 
+	'Homecoming 10/26', 
+	'Clubapalooza 3/20'] #enter into excel
+	return render_template('home.html', title='Home', news=news)
 
 
 @main.route("/about")

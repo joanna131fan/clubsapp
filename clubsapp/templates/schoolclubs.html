@@ -1,27 +1,21 @@
 {%extends "layout.html"%}
-{%block side_left%}
-<img src="static/favicon/clubslogo.png" style="width:50%">
-{%endblock%}
 {%block content%}
-<h1>Home</h1>
-<br></br>
-{% for event in news %}
+{% for clubs in data %}
 {% set i = loop.index-1 %}
-    <div class="flip-card col-md-6 offset-3">
+    <div class="flip-card col-md-6">
         <div class="flip-card-inner">
         <div class="flip-card-front">
-            <h2>{{ news[i] }}</h2>
+            <h2> {{data[i].club}} </h2>
             <img src="static/favicon/clubslogo.png" style="width:10%">
         </div>
         <div class="flip-card-back">
-            <h3>{{ news[i] }}</h3>
+            <h3>{{data[i].club}}</h3>
+            <p> Advisor: {{data[i].advisor}}</p>
+            <p> Room: {{data[i].room}}</p>
             <p> Contact:  </p> <!--EMAIL-->
         </div>
         </div>
     </div>
     <br>
   {%endfor%}
-{%endblock%}
-{%block side_right%}
-<img src="static/favicon/clubslogo.png" style="width:50%">
 {%endblock%}

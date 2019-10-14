@@ -60,6 +60,7 @@ def create_member_entry_form(user, num_members=5):
 			render_kw={"placeholder": "Enter Full Name"}),
 			min_entries=num_members,
 			max_entries=num_members)
+		# member email is not required
 		submit = SubmitField('Add Members')
 		
 	return MemberEntryForm()

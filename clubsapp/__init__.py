@@ -10,6 +10,7 @@ from flask_mail import Mail
 if not no_bcrypt:
 	from flask_assets import Environment, Bundle
 from clubsapp.config import Config
+import xlrd
 
 db = SQLAlchemy()
 if not no_bcrypt:

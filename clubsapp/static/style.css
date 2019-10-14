@@ -4,6 +4,42 @@ html {
     background-color: #ffffff;
 }
 
+#myInput {
+  background-image: url('https://img.icons8.com/pastel-glyph/64/000000/search--v2.png'); /* Add a search icon to input */
+  background-size: 20px;
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  background-position: 10px 13px;
+  width: 100%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  border-radius: 6px;
+  margin-bottom: 12px; /* Add some space below the input */
+  float: center;
+}
+
+#myTable {
+  border-collapse: collapse; /* Collapse borders */
+  width: 100%; /* Full-width */
+  border: 1px solid #ddd; /* Add a grey border */
+  font-size: 18px; /* Increase font-size */
+}
+
+#myTable th, #myTable td {
+  text-align: left; /* Left-align text */
+  padding: 12px; /* Add padding */
+}
+
+#myTable tr {
+  /* Add a bottom border to all table rows */
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  /* Add a grey background color to the table header and on hover */
+  background-color: #f1f1f1;
+}
+
 nav a {
   font-size: 15px;
   position: relative;
@@ -44,6 +80,28 @@ h1 {
     font-family: 'Poppins', sans-serif;
     border-radius: 4px;
 }
+
+h2 {
+  font-size: 20px;
+  text-align: center;
+  float: center;
+  margin: 10 10;
+  padding: 20px 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+h3 {
+  font-size: 15px;
+  text-align: center;
+  float: center;
+  margin: 10 10;
+  padding: 10px 10px;
+  background-color: rgba(5, 21, 44, 0.815);
+  color: #ffffff;
+  border: 1px solid rgba(20, 9, 51, 0.781);
+  font-family: 'Poppins', sans-serif;
+  border-radius: 4px;
+}
 body {
     margin: auto auto;
     background-color: #c7e4f1;
@@ -56,8 +114,10 @@ img {
     margin: 0 auto;
 }
 p {
-    margin: 20px 3px;
+    margin: 10px 3px;
     color: #2f0849;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
 }
 input {
     width: 100%;
@@ -107,8 +167,8 @@ table {
   
   table, td, th {
     padding: 2px !important;
-    border: 1px solid rgb(3, 0, 0);
-    border-top: 1px solid rgb(3, 0, 0);
+    border: 1px solid rgb(3, 0, 0) !important;
+    border-top: 1px solid rgb(3, 0, 0) !important;
     vertical-align: middle !important;
     text-align: center;
   }
@@ -137,7 +197,63 @@ table {
     background-color: rgb(245,245,245);
   }
   
+  tr:hover td {
+    background-color:#d6c4e2 !important;
+  }
+
+  tr:hover {
+    background-color:#d6c4e2 !important;
+  }
+
+
   caption {
     padding: 10px;
   }
 
+/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.flip-card {
+  background-color: transparent;
+  width: 400px;
+  height: 150px;
+  border-radius: 10px;
+  border: 10px white;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border: 10px white;
+  border-radius: 10px;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  background-color: rgb(212, 239, 252);
+  color: black;
+}
+
+/* Style the back side */
+.flip-card-back {
+  background-color:  #9ebcfc;
+  color: white;
+  transform: rotateY(180deg);
+}

@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>My Clubs</h1>
+<h1><img src="{{ url_for('static', filename='favicon/clubslogo.png') }}" style="width:10%"></h1>
   <div class="content-section">
     <form method="POST" action="">
       {{ form.hidden_tag() }}

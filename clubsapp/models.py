@@ -59,3 +59,19 @@ class Attendance(db.Model):
 	student_name = db.Column(db.String(35), nullable=False)
 	present = db.Column(db.Boolean, default=False) #set correctly
 	minutes_id = db.Column(db.Integer, db.ForeignKey('minutes.id'))
+	
+	def __repr__(self):
+		return self.student_name
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    club = db.Column(db.String(80))
+    advisor = db.Column(db.Text)
+    room = db.Column = (db.Text)
+    def __init__(self, club, advisor, room):
+        self.club = club
+        self.advisor = advisor
+        self.room = room
+
+    def __repr__(self):
+        return '<Post %r>' % self.club
