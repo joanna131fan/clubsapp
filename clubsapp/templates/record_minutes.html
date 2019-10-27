@@ -1,6 +1,6 @@
 {%extends "layout.html"%}
 {%block content%}
-<h1>Record Page</h1>
+<h1>Record Club Minutes for {{ club.name }}</h1>
 <div class = "content-section">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
@@ -78,6 +78,8 @@
                     {{ form.notes(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
+            <hr>
+            <label> **SKIP IF UNNECESSARY** </label>
             <div class="form-group">
             <label> Purchase Orders </label>
             <table class="table table-bordered table-striped mb-0">

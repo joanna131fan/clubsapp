@@ -64,10 +64,19 @@ button {
   margin: 5px 5px;
 }
 
+footer {
+  font-size: 15px;
+  float: center;
+}
+
 a {
   font-family: 'Poppins', sans-serif;
 }
 
+.link-small{
+ font-size: 15px;
+ text-align: center;
+}
 h1 {
     font-size: 40px;
     text-align: center;
@@ -107,6 +116,7 @@ body {
     background-color: #c7e4f1;
     padding: 0 20px 20px 20px;
     border: 5px solid #c7e4f1;
+    word-wrap: break-word;
 }
 
 img {
@@ -118,6 +128,7 @@ p {
     color: #2f0849;
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
+    word-wrap: break-word !important;
 }
 input {
     width: 100%;
@@ -163,6 +174,7 @@ table {
     font-size: 0.8rem;
     text-align: inherit;
     width: 400px;
+    word-wrap: break-word;
   }
   
   table, td, th {
@@ -171,6 +183,7 @@ table {
     border-top: 1px solid rgb(3, 0, 0) !important;
     vertical-align: middle !important;
     text-align: center;
+    word-wrap: break-word;
   }
   .my-custom-scrollbar {
     position: relative;
@@ -183,10 +196,12 @@ table {
 
   th {
     color: rgb(26, 4, 4);
+    word-wrap: break-word;
   }
   
   td {
     text-align: center;
+    word-wrap: break-word;
   }
   
   tr:nth-child(even) td {
@@ -213,11 +228,12 @@ table {
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
   background-color: transparent;
-  width: 400px;
-  height: 150px;
+  width: 100%;
+  float: center !important;
+  height: 130px;
   border-radius: 10px;
   border: 10px white;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  /*perspective: 1000px; Remove this if you don't want the 3D effect */
 }
 
 /* This container is needed to position the front and back side */

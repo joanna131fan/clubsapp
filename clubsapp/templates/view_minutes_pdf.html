@@ -55,6 +55,18 @@
                 </tr>
                 <!--ADD PURCHASE AND FUND-->
                 <tr>
+                    {% if minutes.purchase %}
+                    <th scope="col" colspan="3"> Purchases: <br> {{minutes.purchase}}</th> 
+                    <th scope="col" colspan="2"> Votes: <br> {{minutes.purchasemotion}}</th> 
+                    {% endif %}
+                </tr>
+                <tr>
+                    {% if minutes.fundraiser %}
+                    <th scope="col" colspan="3"> Funds: <br>{{minutes.fundraiser}}</th>
+                    <th scope="col" colspan="2"> Votes: <br>{{minutes.fundmotion}}</th> 
+                    {% endif %}
+                </tr>
+                <tr>
                     <th scope="col" colspan="5">Minutes Respectfully Submitted by: {{user.firstname}} {{user.lastname}}</th>
                 </tr>
                 <tr>

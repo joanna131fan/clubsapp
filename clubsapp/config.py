@@ -21,6 +21,6 @@ class Config:
 	
 class TestingConfig(Config):
 	SECRET_KEY = 'should_be_a_long_random_string'
-	SQLALCHEMY_DATABASE_URI = 'sqlite:///testing.db'
+	SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db'
 	TESTING = True
 	WTF_CSRF_ENABLED = False

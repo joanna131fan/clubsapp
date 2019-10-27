@@ -5,6 +5,7 @@ from flask_login import UserMixin
 from clubsapp import db, login_manager
 from clubsapp.utils import ROLES
 from flask_sqlalchemy import SQLAlchemy
+import sqlite3
 
 user_club_assoc_table = db.Table('user_club_assoc_table',
 	db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
@@ -35,6 +36,7 @@ class Club(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(100), unique=True, nullable=False)
 	members = db.relationship('User', secondary=user_club_assoc_table)
+	contacts = db.Column(db.Text)
 	minutes = db.relationship('Minutes', backref='club')
 	def __repr__(self):
 		return f'{self.name}'#Club(name={self.name!r})
@@ -46,7 +48,7 @@ class Minutes(db.Model):
 	time = db.Column(db.Time) #00:00:00
 	location = db.Column(db.String(100), nullable=False)
 	attendance = db.relationship('Attendance', backref='minutes', lazy=True) #check code
-	purchase =  db.Column(db.Text)
+	purchase =  db.Column(db.String(500))
 	purchasemotion = db.Column(db.Text)
 	fundraiser = db.Column(db.Text)
 	fundmotion = db.Column(db.Text)
@@ -67,11 +69,13 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     club = db.Column(db.String(80))
     advisor = db.Column(db.Text)
-    room = db.Column = (db.Text)
-    def __init__(self, club, advisor, room):
+    room = db.Column(db.Text)
+    contact = db.Column(db.Text)
+    def __init__(self, club, advisor, room, contact):
         self.club = club
         self.advisor = advisor
         self.room = room
+        self.contact = contact
 
     def __repr__(self):
         return '<Post %r>' % self.club

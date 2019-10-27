@@ -60,11 +60,15 @@ def create_member_entry_form(user, num_members=5):
 			render_kw={"placeholder": "Enter Full Name"}),
 			min_entries=num_members,
 			max_entries=num_members)
-		# member email is not required
 		submit = SubmitField('Add Members')
 		
 	return MemberEntryForm()
 
+class ContactList(FlaskForm):
+    contacts = TextAreaField(
+		'Club Contacts'
+	)
+    submit = SubmitField('Add Contacts')
 
 def record_club_name_form(user):
 	def user_club_query():
@@ -89,7 +93,7 @@ def record_club_name_form(user):
 
 class PurchaseOrderForms(FlaskForm):
 	payable_to = StringField('Payable To')
-	amount = DecimalField('Amount', places=2,
+	amount = StringField('Amount',
 		render_kw={"placeholder":"00.00"})
 	expenditure = StringField('Purpose of Expenditure', 
 		render_kw={"placeholder":"Expenditure"})
@@ -97,9 +101,8 @@ class PurchaseOrderForms(FlaskForm):
 class FundraiserForms(FlaskForm):
 	descript = StringField('Fundraiser Description',
 		validators=[Optional()])
-	proposeddate = DateField('Proposed Date (dd/mm/year)',
-			validators=[Optional()],
-			format = '%d/%m/%Y')
+	proposeddate = StringField('Proposed Date (dd/mm/year)',
+			validators=[Optional()])
 	expenditure = StringField('Purpose of Expenditure',
 		validators=[Optional()],
 		render_kw={"placeholder":"Expenditure"})

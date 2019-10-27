@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block side_left %}
+<h3>Directions</h3>
+<footer>
+    1. Copy and paste all old contacts that you want to keep in updated contacts from the right.
+    <br>
+    2. Separate contacts with semicolons or commas. (EXAMPLE: john@gmail.com, bob@gmail.com)
+</footer>
+{% endblock side_left %}
+{% block content %}
+<h1>Club Contacts for {{ club.name }}</h1>
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Contacts</legend>
+            <div class="form-group">
+                {{ form.contacts.label(class="form-control-label") }}
+                {% if form.contacts.errors %}
+                    {{ form.contacts(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.contacts.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.contacts(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info")}}
+        </div>
+    </form>
+</div>
+{% endblock content %}
+{% block side_right %}
+<h3>Old Contact List</h3>
+<p>{{club.contacts}}</p>
+{% endblock side_right%}

@@ -1,21 +1,25 @@
-{%extends "layout.html"%}
+{%extends "layout2.html"%}
 {%block content%}
+<h1>Portola High School</h1>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Clubs"> <!--FIX SEARCH FUNCTION-->
+<div id="myClubs">
 {% for clubs in data %}
 {% set i = loop.index-1 %}
-    <div class="flip-card col-md-6">
+    <div class="flip-card" id="card">
         <div class="flip-card-inner">
         <div class="flip-card-front">
             <h2> {{data[i].club}} </h2>
-            <img src="static/favicon/clubslogo.png" style="width:10%">
+            <img src="static/favicon/clubslogo.png" style="width:7%">
         </div>
         <div class="flip-card-back">
             <h3>{{data[i].club}}</h3>
-            <p> Advisor: {{data[i].advisor}}</p>
-            <p> Room: {{data[i].room}}</p>
-            <p> Contact:  </p> <!--EMAIL-->
+            <p> Advisor(s): {{data[i].advisor}} &nbsp;&nbsp;&nbsp; Room: {{data[i].room}} </p>
+            <a href="mailto: {{data[i].contact}}"> Contact Advisor(s) </a> 
         </div>
         </div>
     </div>
     <br>
   {%endfor%}
+</div>
+<a href="{{ url_for('main.about') }}" class="link-small">Feature Your School's Clubs</a>
 {%endblock%}
