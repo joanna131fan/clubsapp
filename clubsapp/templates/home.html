@@ -1,6 +1,6 @@
 {%extends "layout.html"%}
 {%block side_left%}
-<img src="static/favicon/clubslogo.png" style="width:50%">
+<!-- <img src="static/favicon/clubslogo.png" style="width:50%"> -->
 {%endblock%}
 {%block content%}
 <h1>Home</h1>
@@ -15,7 +15,7 @@
         </div>
         <div class="flip-card-back">
             <h3>{{ news[i] }}</h3>
-            <p> Contact:  </p> <!--EMAIL-->
+            <a href="mailto: {{'joannafan03@gmail.com'}}" class="link-small"> Contact </a> <!--EMAIL-->
         </div>
         </div>
     </div>
@@ -23,5 +23,5 @@
   {%endfor%}
 {%endblock%}
 {%block side_right%}
-<img src="static/favicon/clubslogo.png" style="width:50%">
+<!-- <img src="static/favicon/clubslogo.png" style="width:50%"> -->
 {%endblock%}

@@ -212,13 +212,13 @@ table {
     background-color: rgb(245,245,245);
   }
   
-  tr:hover td {
-    background-color:#d6c4e2 !important;
+  /* tr:hover td {
+    background-color:#d6c4e2;
   }
 
   tr:hover {
-    background-color:#d6c4e2 !important;
-  }
+    background-color:#d6c4e2;
+  } */
 
 
   caption {

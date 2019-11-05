@@ -1,8 +1,9 @@
 {%extends "layout2.html"%}
 {%block content%}
-<h1>Portola High School</h1>
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Clubs"> <!--FIX SEARCH FUNCTION-->
-<div id="myClubs">
+<a href="{{ url_for('main.about') }}" class="link-small">Feature Your School's Clubs</a>
+<h3>Clubs for Portola High School</h3>
+<!-- <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Clubs"> FIX SEARCH FUNCTION
+<div id="myClubs"> -->
 {% for clubs in data %}
 {% set i = loop.index-1 %}
     <div class="flip-card" id="card">
@@ -21,5 +22,4 @@
     <br>
   {%endfor%}
 </div>
-<a href="{{ url_for('main.about') }}" class="link-small">Feature Your School's Clubs</a>
 {%endblock%}

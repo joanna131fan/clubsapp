@@ -1,0 +1,28 @@
+{%extends "layout2.html"%}
+{%block content%}
+<h1>School Clubs</h1>
+<div class="content-section">
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4"> Select School </legend>
+        <div class="form-group">
+          {{ form.school.label(class="form-control-label") }}
+          {% if form.school.errors %}
+            {{ form.school(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.school.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.school(class="form-control form-control-lg") }}
+          {% endif %}
+      </fieldset>
+      <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info")}}
+      </div>
+    </form>
+  </div>
+<a href="{{ url_for('main.about') }}" class="link-small">Feature Your School's Clubs</a>
+{%endblock%}

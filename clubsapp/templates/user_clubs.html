@@ -57,7 +57,7 @@
 <br>
 
 <h3> Current Clubs </h3>
-<table class = "table table-bordered table-striped mb-0" style = "table-layout: fixed;">
+<table class = "table" style = "table-layout: fixed;">
   <tr>
     <th scope="col" colspan="2">Club</th>
     <th scope="col" colspan="2">Members</th>
@@ -80,11 +80,11 @@
         <br>
         <p style="word-wrap: break-word;">{{club.contacts}}</p>
       </td>
-      <!-- <td scope="col" colspan="1">
-        <a href="{{ url_for('clubs.user_clubs_edit', user_id=current_user.id, club_id=club.id)}}"><h3>Edit Club Info</h3></a>
-      </td> -->
     </tr>
     {% endfor %}
   </div>
 </table>
 {% endblock content %}
+      <!-- <td scope="col" colspan="1">
+        <a href="{{ url_for('clubs.user_clubs_edit', user_id=current_user.id, club_id=club.id)}}"><h3>Edit Club Info</h3></a>
+      </td> -->

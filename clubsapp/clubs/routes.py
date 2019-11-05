@@ -21,10 +21,10 @@ def user_clubs(user_id):
 	if form.validate_on_submit():
 		advisor = User.query.filter_by(email=form.email.data).first()
 		# TODO: Change this back to `ROLES['teacher']`
-		if not advisor or advisor.role != ROLES['student']: 
-			flash('That email does not belong to an advisor, or does not exist at all!', 'danger')
-			# TODO: should this be a redirect?
-			return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
+		# if not advisor or advisor.role != ROLES['student']: 
+		# 	flash('That email does not belong to an advisor, or does not exist at all!', 'danger')
+		# 	# TODO: should this be a redirect?
+		# 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 		club = Club(name=form.club_name.data)
 		# TODO: ADD CHECK UNIQUE CLUB
 		db.session.add(club)
@@ -35,68 +35,74 @@ def user_clubs(user_id):
 		return redirect(url_for('clubs.user_clubs', user_id=user_id))
 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form) #change to num_club_members
 
-@clubs.route('/edit_clubs/<int:user_id>/<int:club_id>', methods=['GET', 'POST'])
-@login_required
-def user_clubs_edit(user_id, club_id):
-	user = User.query.get_or_404(user_id)
-	clubs = user.clubs
-	id=str(club_id)
+# @clubs.route('/edit_clubs/<int:user_id>/<int:club_id>', methods=['GET', 'POST'])
+# @login_required
+# def user_clubs_edit(user_id, club_id):
+# 	user = User.query.get_or_404(user_id)
+# 	id=str(club_id)
 
-	# create cursor
-	BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-	db_path = os.path.join(BASE_DIR, "site.db")
-	with sqlite3.connect(db_path) as db:
-		cur = db.cursor()
+# 	# create cursor
+# 	BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# 	db_path = os.path.join(BASE_DIR, "site.db")
+# 	with sqlite3.connect(db_path) as db:
+# 		cur = db.cursor()
 
-		# get club by id
-		cur.execute("SELECT * FROM club WHERE id= ?", id)
+# 		# get club by id
+# 		cur.execute("SELECT * FROM club WHERE id= ?", id)
 
-		club = cur.fetchone()
-		cur.close()
+# 		club = cur.fetchone()
+# 		cur.close()
 
-	# get form
-	form = ClubRegistrationForm()
+# 	# get form
+# 	form = ClubRegistrationForm(request.form)
 
-	# populate fields
-	form.club_name.data=club['club_name']
-	form.advisor.data=club['advisor']
+# 	# populate fields
+# 	form.club_name.data=club[1]
+# 	# form.advisor.data=club[2]
+# 	# form.email.data=club[3]
 
-	if form.validate_on_submit():
-		advisor = User.query.filter_by(email=form.email.data).first()
-		# TODO: Change this back to `ROLES['teacher']`
-		if not advisor or advisor.role != ROLES['student']: 
-			flash('That email does not belong to an advisor, or does not exist at all!', 'danger')
-			# TODO: should this be a redirect?
-			return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
-		club = Club(name=form.club_name.data)
-		# TODO: ADD CHECK UNIQUE CLUB
-		db.session.add(club)
-		club.members.append(advisor)
-		user.clubs.append(club)
-		db.session.commit()
-		flash('Your club has been updated!', 'success')
-		return redirect(url_for('clubs.user_clubs_edit', user_id=user_id, club_id=club_id))
-	return render_template('user_clubs_edit.html', club=club, user=user, form=form) 
+# 	if form.validate_on_submit():
+# 		advisor = User.query.filter_by(email=form.email.data).first()
+# 		# TODO: Change this back to `ROLES['teacher']`
+# 		# if not advisor or advisor.role != ROLES['student']: 
+# 		# 	flash('That email does not belong to an advisor, or does not exist at all!', 'danger')
+# 		# 	# TODO: should this be a redirect?
+# 		# 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
+# 		club = Club(name=form.club_name.data)
+# 		# TODO: ADD CHECK UNIQUE CLUB
+# 		db.session.add(club)
+# 		club.members.append(advisor)
+# 		user.clubs.append(club)
+# 		db.session.commit()
+# 		flash('Your club has been updated!', 'success')
+# 		return redirect(url_for('clubs.user_clubs_edit', user_id=user_id, club_id=club_id))
+# 	return render_template('user_clubs_edit.html', club=club, user=user, form=form) 
 
-@clubs.route('/delete_club/<int:user_id>/<int:club_id>', methods=['POST'])
-@login_required
-def delete_club(user_id, club_id):
-	# EDIT AND FIX
-    # Create cursor
-    cur = mysql.connection.cursor()
+# @clubs.route('/delete_club/<int:user_id>/<int:club_id>', methods=['POST'])
+# @login_required
+# def delete_club(user_id, club_id):
+# 	# EDIT AND FIX
+#     # create cursor
+# 	BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# 	db_path = os.path.join(BASE_DIR, "site.db")
+# 	with sqlite3.connect(db_path) as db:
+# 		cur = db.cursor()
 
-    # Execute
-    cur.execute("DELETE FROM articles WHERE id = %s", [id])
+# 		# get club by id
+# 		cur.execute("SELECT * FROM club WHERE id= ?", id)
 
-    # Commit to DB
-    mysql.connection.commit()
+# 		club = cur.fetchone()
+# 		cur.close()
 
-    #Close connection
-    cur.close()
+#     # Commit to DB
+# 	cur.connection.commit()
 
-    flash('Article Deleted', 'success')
+#     #Close connection
+# 	cur.close()
 
-    return redirect(url_for('dashboard'))
+# 	flash('Club Deleted', 'success')
+# 		return redirect(url_for('clubs.user_clubs', user_id=user_id))
+# 	return render_template('user_clubs.html', clubs=clubs, user=user, form=form)
 
 
 @clubs.route("/contactlist/<int:user_id>/<int:club_id>", methods=['GET', 'POST'])
@@ -222,43 +228,3 @@ def minutes_pdf(user_id, club_id, minutes_id):
 	minutes = Minutes.query.get_or_404(minutes_id) #GET THE Minutes for specific DAY
 	return render_template('view_minutes_pdf.html', club=club, user=user, minutes=minutes)
 
-@clubs.route("/schoolclubs", methods=['GET'])
-@login_required
-def school_clubs():
-    workbook = xlrd.open_workbook("/Users/joannafan/Desktop/clubsproject/clubsapp/clubs/portolaclubs.xlsx")
-    worksheet = workbook.sheet_by_index(0)
-    first_row=[]
-    for col in range(worksheet.ncols):
-        first_row.append(worksheet.cell_value(0,col))
-    data = []
-    for row in range(1, worksheet.nrows):
-        record = {}
-        for col in range(worksheet.ncols):
-            if isinstance(worksheet.cell_value(row,col), str):
-                if col==0:
-                	club = worksheet.cell_value(row,col).strip()
-                if col==1:
-                    advisor = worksheet.cell_value(row,col).strip()
-                if col==2:
-                    room = worksheet.cell_value(row,col).strip()
-                if col==3:
-                    contact = worksheet.cell_value(row,col).strip()
-            else:
-                if col==0:
-                	club = worksheet.cell_value(row,col).strip()
-                if col==1:
-                    advisor = worksheet.cell_value(row,col).strip()
-                if col==2:
-                    room = worksheet.cell_value(row,col).strip()
-                if col==3:
-                    contact = worksheet.cell_value(row,col).strip()
-        post=Post(club=club, advisor=advisor, room=room, contact=contact)
-        data.append(post)
-    return render_template('schoolclubs.html', data=data)
-
-# @clubs.route("/schoolclubs", methods=['GET', 'POST'])
-# @login_required
-# def school_clubs():
-# 	df = pd.read_excel("/Users/joannafan/Desktop/clubsproject/clubsapp/clubs/portolaclubs.xlsx")
-# 	# return render_template('schoolclubs.html', df=df)
-# 	return df.to_html()
