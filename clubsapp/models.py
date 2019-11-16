@@ -2,9 +2,16 @@ from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from flask_login import UserMixin
+<<<<<<< HEAD
+from clubsapp import db, login_manager, create_app
+from clubsapp.utils import ROLES
+from flask_sqlalchemy import SQLAlchemy
+from clubsapp.config import Config
+=======
 from clubsapp import db, login_manager
 from clubsapp.utils import ROLES
 from flask_sqlalchemy import SQLAlchemy
+>>>>>>> 571b656d3b3ad9b9da31363aeaae5115b7c7eb78
 import sqlite3
 
 user_club_assoc_table = db.Table('user_club_assoc_table',
@@ -21,13 +28,36 @@ def load_user(user_id):
 
 class User(db.Model, UserMixin):
 	id = db.Column(db.Integer, primary_key=True)
+<<<<<<< HEAD
+	firstname = db.Column(db.String(20), nullable=False)
+	lastname = db.Column(db.String(20), nullable=False)
+	school = db.Column(db.String(30), nullable=False)
+	schoolid = db.Column(db.String(60), unique=True, nullable=False)
+=======
 	firstname = db.Column(db.String(15), nullable=False)
 	lastname = db.Column(db.String(15), nullable=False)
+>>>>>>> 571b656d3b3ad9b9da31363aeaae5115b7c7eb78
 	email = db.Column(db.String(60), unique=True, nullable=False)
 	password = db.Column(db.String(60), nullable=False)
 	role = db.Column(db.Integer(), nullable=False, default=ROLES['student'])
 	clubs = db.relationship('Club', secondary=user_club_assoc_table)
 	
+<<<<<<< HEAD
+	def get_reset_token(self, expires_sec=1800):
+		s = Serializer('SECRET_KEY', expires_sec)
+		return s.dumps({'user_id': self.id}).decode('utf-8')
+
+	@staticmethod
+	def verify_reset_token(token):
+		s = Serializer('SECRET_KEY')
+		try:
+			user_id = s.loads(token)['user_id']
+		except:
+			return None
+		return User.query.get(user_id)
+
+=======
+>>>>>>> 571b656d3b3ad9b9da31363aeaae5115b7c7eb78
 	def __repr__(self):
 		return f'{self.firstname} {self.lastname}' #return f'User(firstname={self.firstname!r}, lastname={self.lastname!r})'
 
@@ -78,4 +108,8 @@ class Post(db.Model):
         self.contact = contact
 
     def __repr__(self):
+<<<<<<< HEAD
         return '<Post %r>' % self.club
+=======
+        return '<Post %r>' % self.club
+>>>>>>> 571b656d3b3ad9b9da31363aeaae5115b7c7eb78

@@ -111,6 +111,23 @@ h3 {
   font-family: 'Poppins', sans-serif;
   border-radius: 4px;
 }
+<<<<<<< HEAD
+
+h4 {
+  font-size: 15px;
+  text-align: center;
+  float: center;
+  margin: 10 10;
+  padding: 10px 10px;
+  background-color: rgba(233, 178, 247, 0.815);
+  color: #ffffff;
+  border: 1px solid rgba(20, 9, 51, 0.781);
+  font-family: 'Poppins', sans-serif;
+  border-radius: 4px;
+  opacity: 0.8;
+}
+=======
+>>>>>>> 571b656d3b3ad9b9da31363aeaae5115b7c7eb78
 body {
     margin: auto auto;
     background-color: #c7e4f1;

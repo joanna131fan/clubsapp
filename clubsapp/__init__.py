@@ -61,8 +61,13 @@ def prepare_db(app):
 		db.drop_all()
 		db.create_all()
 		
+<<<<<<< HEAD
+		test_student = User(firstname='Test', lastname='User', school='Portola High School', schoolid='21usertest', email='test@gmail.com', password='test')
+		test_teacher = User(firstname='Test', lastname='Teacher', school='Portola High School', schoolid='teachertest', email='teacher@gmail.com', password='test')
+=======
 		test_student = User(firstname='Test', lastname='User', email='test@gmail.com', password='test')
 		test_teacher = User(firstname='Test', lastname='Teacher', email='teacher@gmail.com', password='test')
+>>>>>>> 571b656d3b3ad9b9da31363aeaae5115b7c7eb78
 		test_club = Club(name='Test Club')
 		db.session.add(test_student)
 		db.session.add(test_teacher)

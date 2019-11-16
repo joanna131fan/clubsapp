@@ -25,7 +25,11 @@
                     {% if form.lastname.errors %}
                         {{ form.lastname(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
+<<<<<<< HEAD
+                            {% for error in form.lastname.errors %}
+=======
                             {% for error in lastname.email.errors %}
+>>>>>>> 571b656d3b3ad9b9da31363aeaae5115b7c7eb78
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
@@ -34,6 +38,35 @@
                     {% endif %}
                 </div>
                 <div class="form-group">
+<<<<<<< HEAD
+                    {{ form.school.label(class="form-control-label") }}
+                    {% if form.school.errors %}
+                        {{ form.school(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.school.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.school(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.schoolid.label(class="form-control-label") }}
+                    {% if form.schoolid.errors %}
+                        {{ form.schoolid(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.schoolid.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.schoolid(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+=======
+>>>>>>> 571b656d3b3ad9b9da31363aeaae5115b7c7eb78
                     {{ form.email.label(class="form-control-label") }}
                     {% if form.email.errors %}
                         {{ form.email(class="form-control form-control-lg is-invalid") }}
